@@ -130,8 +130,11 @@ class PostgresConnectionWrapper:
         self._conn = raw_conn
 
     def cursor(self):
-        from psycopg2.extras import RealDictCursor
-        return PostgresCursorWrapper(self._conn.cursor(cursor_factory=RealDictCursor))
+        try:
+            from psycopg2.extras import RealDictCursor
+            return PostgresCursorWrapper(self._conn.cursor(cursor_factory=RealDictCursor))
+        except Exception:
+            return PostgresCursorWrapper(self._conn.cursor())
 
     def commit(self):
         return self._conn.commit()
