@@ -1,0 +1,15 @@
+{
+  "name": "NER Logistics Intelligence",
+  "short_name": "NERLogistics",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090d16",
+  "theme_color": "#090d16",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%230284c7' width='100' height='100' rx='20'/><text y='.9em' font-size='80' x='10'>⚡</text></svg>",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

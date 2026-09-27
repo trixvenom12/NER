@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+networkx
+shapely
+numpy
+httpx
+scikit-learn
+joblib
+pydantic

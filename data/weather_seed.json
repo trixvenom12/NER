@@ -1,0 +1,22 @@
+[
+  { "point_id": 1, "name": "Guwahati_Khanapara", "lat": 26.1150, "lon": 91.8210, "rain_mm": 2.4, "rain_24h_mm": 18.5, "visibility_m": 8500.0 },
+  { "point_id": 2, "name": "Byrnihat_Entry", "lat": 26.0420, "lon": 91.8650, "rain_mm": 5.2, "rain_24h_mm": 28.0, "visibility_m": 7200.0 },
+  { "point_id": 3, "name": "Nongpoh_North", "lat": 25.9320, "lon": 91.8780, "rain_mm": 8.0, "rain_24h_mm": 42.0, "visibility_m": 6000.0 },
+  { "point_id": 4, "name": "Nongpoh_South", "lat": 25.8640, "lon": 91.8840, "rain_mm": 9.5, "rain_24h_mm": 48.2, "visibility_m": 5500.0 },
+  { "point_id": 5, "name": "Umsning_Ghat", "lat": 25.7620, "lon": 91.9051, "rain_mm": 14.0, "rain_24h_mm": 62.0, "visibility_m": 4100.0 },
+  { "point_id": 6, "name": "Umiam_Barapani", "lat": 25.6610, "lon": 91.8980, "rain_mm": 16.5, "rain_24h_mm": 74.0, "visibility_m": 3500.0 },
+  { "point_id": 7, "name": "Shillong_Bypass", "lat": 25.6020, "lon": 91.9540, "rain_mm": 12.0, "rain_24h_mm": 58.0, "visibility_m": 4200.0 },
+  { "point_id": 8, "name": "Mawryngkneng", "lat": 25.5560, "lon": 92.0520, "rain_mm": 10.0, "rain_24h_mm": 49.0, "visibility_m": 5000.0 },
+  { "point_id": 9, "name": "Ummulong_Ridge", "lat": 25.4950, "lon": 92.1240, "rain_mm": 15.0, "rain_24h_mm": 68.0, "visibility_m": 3800.0 },
+  { "point_id": 10, "name": "Jowai_Bypass", "lat": 25.4410, "lon": 92.2030, "rain_mm": 18.2, "rain_24h_mm": 82.5, "visibility_m": 3100.0 },
+  { "point_id": 11, "name": "Ladrymbai_Mining_Belt", "lat": 25.3210, "lon": 92.3120, "rain_mm": 22.0, "rain_24h_mm": 91.0, "visibility_m": 2500.0 },
+  { "point_id": 12, "name": "Khliehriat_Central", "lat": 25.2640, "lon": 92.3520, "rain_mm": 24.5, "rain_24h_mm": 98.4, "visibility_m": 2200.0 },
+  { "point_id": 13, "name": "Lumshnong_Ghat", "lat": 25.1850, "lon": 92.3780, "rain_mm": 28.0, "rain_24h_mm": 108.0, "visibility_m": 1800.0 },
+  { "point_id": 14, "name": "Sonapur_Tunnel_Zone", "lat": 25.1142, "lon": 92.3685, "rain_mm": 35.0, "rain_24h_mm": 128.5, "visibility_m": 1100.0 },
+  { "point_id": 15, "name": "Malidor_Border_Ghat", "lat": 25.0420, "lon": 92.4210, "rain_mm": 26.0, "rain_24h_mm": 94.0, "visibility_m": 2400.0 },
+  { "point_id": 16, "name": "Kalain_Valley_Entry", "lat": 24.9650, "lon": 92.5620, "rain_mm": 14.5, "rain_24h_mm": 61.0, "visibility_m": 4200.0 },
+  { "point_id": 17, "name": "Badarpur_Ghat_Floodplain", "lat": 24.9020, "lon": 92.5850, "rain_mm": 12.0, "rain_24h_mm": 54.0, "visibility_m": 5200.0 },
+  { "point_id": 18, "name": "Panchgram_Paper_Mill_Stretch", "lat": 24.8720, "lon": 92.6510, "rain_mm": 9.0, "rain_24h_mm": 41.0, "visibility_m": 6000.0 },
+  { "point_id": 19, "name": "Silchar_Ramnagar_Approach", "lat": 24.8380, "lon": 92.7420, "rain_mm": 6.5, "rain_24h_mm": 32.0, "visibility_m": 7100.0 },
+  { "point_id": 20, "name": "Silchar_ISBT_Hub", "lat": 24.8250, "lon": 92.7910, "rain_mm": 4.0, "rain_24h_mm": 24.0, "visibility_m": 8000.0 }
+]

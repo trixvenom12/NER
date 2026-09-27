@@ -1,0 +1,10 @@
+python-interpreter-path = "E:/SIH 2026 Project (2)/SIH 2026 Project/venv/Scripts/python.exe"
+
+site-package-path = [
+    "E:/SIH 2026 Project (2)/SIH 2026 Project/venv/Lib/site-packages",
+]
+
+search-path = [
+    "E:/SIH 2026 Project (2)/SIH 2026 Project",
+    "E:/SIH 2026 Project (2)/SIH 2026 Project/api",
+]

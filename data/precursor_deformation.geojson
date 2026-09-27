@@ -1,0 +1,79 @@
+{
+  "type": "FeatureCollection",
+  "name": "sentinel1_insar_deformation_nh6",
+  "metadata": {
+    "sensor": "Sentinel-1A C-SAR",
+    "track": "Ascending 012",
+    "interferogram_pair": "2026-05-18_to_2026-06-23",
+    "method": "SNAP 2-pass DInSAR unwrapped phase",
+    "reference_point": [92.3550, 25.1200]
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "site_id": "INSAR-NH6-01",
+        "location_name": "Sonapur Tunnel Mountain Cut (Chainage km 242)",
+        "displacement_mm_per_year": -48.5,
+        "coherence": 0.78,
+        "risk_level": "CRITICAL_SUBSIDENCE",
+        "recent_displacement_mm": [-1.2, -1.5, -1.8, -2.1, -2.5, -3.1, -3.8, -4.6, -5.9, -7.8, -10.5, -14.2, -19.8, -27.5, -36.2, -48.5],
+        "rain_72h_history_mm": [12.0, 15.0, 18.0, 25.0, 32.0, 41.0, 56.0, 68.0, 85.0, 102.0, 128.0, 142.0, 165.0, 180.0, 210.0, 235.0]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [92.3640, 25.1110],
+          [92.3730, 25.1110],
+          [92.3730, 25.1180],
+          [92.3640, 25.1180],
+          [92.3640, 25.1110]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "site_id": "INSAR-NH6-02",
+        "location_name": "Kseh Bilat Unstable Slope & Subsidence (Chainage km 236)",
+        "displacement_mm_per_year": -32.1,
+        "coherence": 0.72,
+        "risk_level": "ACCELERATING_CREEP",
+        "recent_displacement_mm": [-0.8, -1.0, -1.2, -1.5, -1.9, -2.3, -2.9, -3.6, -4.8, -6.2, -8.1, -11.0, -15.4, -21.0, -27.2, -32.1],
+        "rain_72h_history_mm": [10.0, 12.0, 14.0, 20.0, 28.0, 36.0, 48.0, 60.0, 72.0, 88.0, 110.0, 125.0, 140.0, 155.0, 175.0, 192.0]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [92.3350, 25.1340],
+          [92.3450, 25.1340],
+          [92.3450, 25.1420],
+          [92.3350, 25.1420],
+          [92.3350, 25.1340]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "site_id": "INSAR-NH6-03",
+        "location_name": "Lumshnong Escarpment Quarry Face (Chainage km 224)",
+        "displacement_mm_per_year": -21.4,
+        "coherence": 0.81,
+        "risk_level": "MODERATE_CREEP",
+        "recent_displacement_mm": [-0.5, -0.7, -0.9, -1.1, -1.3, -1.6, -2.0, -2.5, -3.2, -4.1, -5.3, -7.0, -9.5, -13.0, -17.2, -21.4],
+        "rain_72h_history_mm": [8.0, 10.0, 12.0, 16.0, 22.0, 30.0, 40.0, 52.0, 65.0, 78.0, 92.0, 105.0, 118.0, 130.0, 145.0, 160.0]
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [92.3700, 25.1800],
+          [92.3840, 25.1800],
+          [92.3840, 25.1900],
+          [92.3700, 25.1900],
+          [92.3700, 25.1800]
+        ]]
+      }
+    }
+  ]
+}

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>NER Logistics Intelligence Platform | PS SIH26002</title>
+  <meta name="description" content="AI-Based Smart Logistics and Accessibility Intelligence Platform for North Eastern Region (NH-6 Guwahati-Shillong-Silchar)">
+  
+  <!-- Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- MapLibre GL JS -->
+  <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+  
+  <link rel="stylesheet" href="/style.css">
+  <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+
+  <!-- Top App Header -->
+  <header class="app-header">
+    <div class="brand-section">
+      <div class="logo-badge">⚡</div>
+      <div>
+        <div style="display: flex; align-items: center;">
+          <span class="brand-title">NER Logistics Intelligence</span>
+          <span class="team-tag">Team Git Pirates</span>
+        </div>
+        <div style="font-size: 11px; color: var(--text-dim);">Corridor NH-6 · Guwahati → Shillong → Silchar</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <!-- Network Connectivity Badge -->
+      <div id="net-status-chip" class="status-chip">
+        <div class="pulse-dot"></div>
+        <span id="net-status-text">Online (Live Feed)</span>
+      </div>
+
+      <!-- Offline Cache Download Button -->
+      <button id="btn-download-corridor" class="btn-header" title="Download entire corridor for offline transit">
+        <span>💾</span>
+        <span id="txt-cache-btn">Cache Corridor</span>
+      </button>
+
+      <!-- Language Toggle -->
+      <select id="lang-select" class="select-input" style="padding: 5px 8px; font-size: 12px; width: auto;">
+        <option value="en">English</option>
+        <option value="hi">हिंदी (Hindi)</option>
+        <option value="as">অসমীয়া (Assamese)</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="app-container">
+    
+    <!-- Left Interactive Panel -->
+    <aside class="control-sidebar">
+      
+      <!-- 4 Core Navigation Tabs -->
+      <nav class="tabs-nav">
+        <button class="tab-btn active" data-tab="tab-route" id="tab-btn-route">
+          <span>📍</span> Route
+        </button>
+        <button class="tab-btn" data-tab="tab-corridor" id="tab-btn-corridor">
+          <span>🏔️</span> Corridor
+        </button>
+        <button class="tab-btn" data-tab="tab-stops" id="tab-btn-stops">
+          <span>🚛</span> Stops
+        </button>
+        <button class="tab-btn" data-tab="tab-sos" id="tab-btn-sos">
+          <span>🆘</span> SOS / Report
+        </button>
+      </nav>
+
+      <!-- TAB 1: ROUTE PLANNING -->
+      <div id="tab-route" class="tab-content active">
+        <div class="route-selector-card">
+          <div class="field-group">
+            <label>Origin</label>
+            <select id="route-src" class="select-input">
+              <option value="101" selected>Guwahati (Khanapara / Beltola Hub)</option>
+              <option value="102">Byrnihat (Ri-Bhoi Checkpost)</option>
+              <option value="104">Nongpoh (Highway Center)</option>
+              <option value="108">Shillong (Central GS Road)</option>
+              <option value="113">Jowai (West Jaintia Hills)</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>Destination</label>
+            <select id="route-dst" class="select-input">
+              <option value="127" selected>Silchar (ISBT / Ramnagar Terminal)</option>
+              <option value="124">Badarpur (Barak Valley Junction)</option>
+              <option value="119">Sonapur Tunnel (South Portal)</option>
+              <option value="116">Khliehriat (East Jaintia Hills)</option>
+              <option value="108">Shillong (Central GS Road)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 3 Profile Cards (fastest, balanced, safest) -->
+        <div class="profile-cards-grid">
+          <div class="profile-card" data-profile="fastest" id="card-fastest">
+            <div class="profile-name">Fastest</div>
+            <div class="profile-time" id="fastest-time">--</div>
+            <div class="profile-delta best" id="fastest-delta">Base Time</div>
+            <span class="risk-pill caution" id="fastest-risk">Risk --</span>
+          </div>
+
+          <div class="profile-card active" data-profile="balanced" id="card-balanced">
+            <div class="profile-name">Balanced</div>
+            <div class="profile-time" id="balanced-time">--</div>
+            <div class="profile-delta" id="balanced-delta">+0 min</div>
+            <span class="risk-pill safe" id="balanced-risk">Risk --</span>
+          </div>
+
+          <div class="profile-card" data-profile="safest" id="card-safest">
+            <div class="profile-name">Safest</div>
+            <div class="profile-time" id="safest-time">--</div>
+            <div class="profile-delta extra" id="safest-delta">+18 min</div>
+            <span class="risk-pill safe" id="safest-risk">Risk --</span>
+          </div>
+        </div>
+
+        <!-- Active Route Statistics -->
+        <div class="route-metrics-bar">
+          <div class="metric-item">
+            <div class="metric-val" id="metric-dist">-- km</div>
+            <div class="metric-lbl">Distance</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val" id="metric-dur">-- min</div>
+            <div class="metric-lbl">Duration</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val" id="metric-mean-risk">--</div>
+            <div class="metric-lbl">Mean Hazard</div>
+          </div>
+          <div class="metric-item">
+            <div class="metric-val" id="metric-max-risk">--</div>
+            <div class="metric-lbl">Max Peak Risk</div>
+          </div>
+        </div>
+
+        <!-- Dynamic Advisories Timeline -->
+        <div class="section-heading">
+          <span>Driver Advisories & Hazards</span>
+          <span id="advisory-count" style="font-size: 11px; color: var(--accent-cyan);">3 alerts</span>
+        </div>
+        <div id="advisories-container" class="advisories-list">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- TAB 2: CORRIDOR RISK & SATELLITE PRECURSOR -->
+      <div id="tab-corridor" class="tab-content">
+        <div class="corridor-stats-box">
+          <div style="font-size: 14px; font-weight: 800; margin-bottom: 8px;">NH-6 Corridor Status</div>
+          <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+            Full 350 km Meghalaya Ghats & Barak Floodplain multi-factor risk assessment.
+          </div>
+
+          <div class="toggle-row">
+            <span style="font-size: 12.5px;">Show Historical Incidents (2021-2026)</span>
+            <label class="switch">
+              <input type="checkbox" id="toggle-incidents" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <span style="font-size: 12.5px;">Sentinel-1 InSAR Deformation Layer</span>
+            <label class="switch">
+              <input type="checkbox" id="toggle-insar" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <span style="font-size: 12.5px;">Corridor Risk Heatmap</span>
+            <label class="switch">
+              <input type="checkbox" id="toggle-heatmap">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <!-- Hackathon Demo Winner: Instant Hazard Simulation -->
+          <button id="btn-simulate-hazard" class="demo-trigger-btn">
+            <span>⛈️</span>
+            <span>Simulate Torrential Rain on Sonapur Ghat</span>
+          </button>
+          <div style="font-size: 10.5px; color: var(--text-dim); text-align: center; margin-top: 6px;">
+            Triggers live diversion away from Sonapur Tunnel before the judges.
+          </div>
+        </div>
+
+        <!-- InSAR Precursor Alert Box -->
+        <div class="section-heading">
+          <span>Satellite InSAR Precursor Monitor</span>
+        </div>
+        <div id="precursor-alerts-container" class="advisories-list">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- TAB 3: TRUCK BAYS & FACILITIES -->
+      <div id="tab-stops" class="tab-content">
+        <div class="section-heading">
+          <span>NH-6 Highway Facilities & Bays</span>
+          <span style="font-size: 10.5px; color: var(--text-dim);">Diurnal Occupancy</span>
+        </div>
+        <div id="facilities-list-container">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+
+      <!-- TAB 4: SOS & INCIDENT REPORT -->
+      <div id="tab-sos" class="tab-content">
+        <div class="section-heading">
+          <span>Driver Ground Truth Report</span>
+        </div>
+        <div class="report-grid">
+          <div class="report-action-btn" data-kind="blocked">
+            <div class="report-btn-icon">🚧</div>
+            <div class="report-btn-title">Road Blocked</div>
+          </div>
+          <div class="report-action-btn" data-kind="slide">
+            <div class="report-btn-icon">🪨</div>
+            <div class="report-btn-title">Landslide / Mud</div>
+          </div>
+          <div class="report-action-btn" data-kind="water">
+            <div class="report-btn-icon">🌊</div>
+            <div class="report-btn-title">Waterlogged</div>
+          </div>
+          <div class="report-action-btn" data-kind="breakdown">
+            <div class="report-btn-icon">⚠️</div>
+            <div class="report-btn-title">Breakdown / Jam</div>
+          </div>
+        </div>
+
+        <!-- 2-Second Hold SOS Emergency Button -->
+        <div class="sos-container">
+          <div class="sos-hold-wrapper">
+            <svg class="sos-ring-svg">
+              <circle class="sos-ring-circle" id="sos-progress-circle" cx="70" cy="70" r="65" stroke-width="6" fill="transparent" />
+            </svg>
+            <div class="sos-button" id="sos-btn">SOS</div>
+          </div>
+          <div style="font-weight: 800; font-size: 15px; margin-bottom: 4px; color: #f87171;">
+            EMERGENCY DISTRESS BEACON
+          </div>
+          <div class="sos-hint">
+            Press and hold for 2 full seconds to trigger distress beacon to highway emergency services.
+          </div>
+          <div id="sos-status-badge" class="sos-status-badge"></div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Map Viewport -->
+    <main class="map-viewport">
+      <div id="map"></div>
+
+      <!-- Module 8 Deliverable: Factor Explanation Drawer -->
+      <div id="factor-drawer" class="factor-drawer">
+        <div class="drawer-header">
+          <div>
+            <div class="drawer-title" id="drawer-segment-name">Segment #--</div>
+            <div style="font-size: 11px; color: var(--text-dim);" id="drawer-segment-sub">NH-6 Corridor</div>
+          </div>
+          <button id="drawer-close" class="drawer-close-btn">&times;</button>
+        </div>
+
+        <div id="drawer-score-badge" class="drawer-score-badge">
+          Hazard Score: <strong id="drawer-score-val">--</strong>
+        </div>
+
+        <!-- 5 Factor Bars -->
+        <div class="factor-bars-list">
+          <div class="factor-bar-item">
+            <div class="factor-bar-label-row">
+              <span>🌧️ Rainfall Past 24h (34%)</span>
+              <span id="bar-val-rain">--%</span>
+            </div>
+            <div class="factor-bar-track">
+              <div class="factor-bar-fill" id="bar-fill-rain" style="background: #38bdf8;"></div>
+            </div>
+            <div class="factor-citation">IMD Heavy-Rain Boundary (10-120 mm/24h)</div>
+          </div>
+
+          <div class="factor-bar-item">
+            <div class="factor-bar-label-row">
+              <span>📐 Slope Gradient (22%)</span>
+              <span id="bar-val-slope">--%</span>
+            </div>
+            <div class="factor-bar-track">
+              <div class="factor-bar-fill" id="bar-fill-slope" style="background: #f59e0b;"></div>
+            </div>
+            <div class="factor-citation">Himalayan Foothills Critical Shear (8°-35°)</div>
+          </div>
+
+          <div class="factor-bar-item">
+            <div class="factor-bar-label-row">
+              <span>🪨 Geological Susceptibility (18%)</span>
+              <span id="bar-val-susc">--%</span>
+            </div>
+            <div class="factor-bar-track">
+              <div class="factor-bar-fill" id="bar-fill-susc" style="background: #a855f7;"></div>
+            </div>
+            <div class="factor-citation">GSI / Bhuvan Landslide Inventory Layer</div>
+          </div>
+
+          <div class="factor-bar-item">
+            <div class="factor-bar-label-row">
+              <span>📅 Incident History (16%)</span>
+              <span id="bar-val-hist">--%</span>
+            </div>
+            <div class="factor-bar-track">
+              <div class="factor-bar-fill" id="bar-fill-hist" style="background: #ec4899;"></div>
+            </div>
+            <div class="factor-citation">PIB & News Archives (2021-2026 Recurrence)</div>
+          </div>
+
+          <div class="factor-bar-item">
+            <div class="factor-bar-label-row">
+              <span>👥 Crowd Ground Truth (10%)</span>
+              <span id="bar-val-reports">--%</span>
+            </div>
+            <div class="factor-bar-track">
+              <div class="factor-bar-fill" id="bar-fill-reports" style="background: #ef4444;"></div>
+            </div>
+            <div class="factor-citation">Verified Driver Incident Reports (Last 4h)</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

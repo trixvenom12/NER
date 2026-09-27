@@ -1,0 +1,239 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 1,
+        "name": "Ri-Bhoi Freight Logistics & Truck Bay",
+        "kind": "truck_bay",
+        "capacity": 85,
+        "attrs": {
+          "highway": "NH-6",
+          "location": "Byrnihat, Meghalaya",
+          "fuel": true,
+          "food": true,
+          "toilet": true,
+          "mechanic": true,
+          "weighbridge": true,
+          "security": "24/7 guarded",
+          "chain_km": 28.5
+        }
+      },
+      "geometry": { "type": "Point", "coordinates": [91.8842, 25.7561] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 2,
+        "name": "Nongpoh Highway Oasis & Rest Bay",
+        "kind": "truck_bay",
+        "capacity": 55,
+        "attrs": {
+          "highway": "NH-6",
+          "location": "Nongpoh Central",
+          "fuel": true,
+          "food": true,
+          "toilet": true,
+          "medical": "First Aid Post",
+          "mechanic": true,
+          "chain_km": 54.2
+        }
+      },
+      "geometry": { "type": "Point", "coordinates": [91.8805, 25.9012] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 3,
+        "name": "Umsning Integrated Truck Stop",
+        "kind": "truck_bay",
+        "capacity": 40,
+        "attrs": {
+          "highway": "NH-6",
+          "location": "Umsning Bypass",
+          "fuel": true,
+          "food": true,
+          "toilet": true,
+          "mechanic": true,
+          "chain_km": 72.8
+        }
+      },
+      "geometry": { "type": "Point", "coordinates": [91.9051, 25.7620] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 4,
+        "name": "Umiam Viewpoint Safety Refuge",
+        "kind": "medical",
+        "capacity": 25,
+        "attrs": {
+          "highway": "NH-6",
+          "location": "Barapani / Umiam",
+          "fuel": true,
+          "medical": "Emergency Trauma Unit",
+          "food": true,
+          "toilet": true,
+          "chain_km": 88.4
+        }
+      },
+      "geometry": { "type": "Point", "coordinates": [91.8950, 25.6580] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 5,
+        "name": "Shillong Mawiong Inter-District Truck Depot",
+        "kind": "truck_bay",
+        "capacity": 110,
+        "attrs": {
+          "highway": "NH-6 / Western Arterial",
+          "location": "Mawiong, Shillong",
+          "fuel": true,
+          "food": true,
+          "toilet": true,
+          "mechanic": true,
+          "cold_storage": true,
+          "chain_km": 103.5
+        }
+      },
+      "geometry": { "type": "Point", "coordinates": [91.8830, 25.6020] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 6,
+        "name": "Mawryngkneng Freight Lay-by",
+        "kind": "truck_bay",
+        "capacity": 45,
+        "attrs": {
+          "highway": "NH-6",
+          "location": "Mawryngkneng Junction",
+          "fuel": true,
+          "food": true,
+          "toilet": true,
+          "chain_km": 128.0
+        }
+      },
+      "geometry": { "type": "Point", "coordinates": [92.0520, 25.5560] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 7,
+        "name": "Jowai Bypass Truck Bay & Logistics Park",
+        "kind": "truck_bay",
+        "capacity": 70,
+        "attrs": {
+          "highway": "NH-6",
+          "location": "Jowai Bypass, West Jaintia Hills",
+          "fuel": true,
+          "food": true,
+          "toilet": true,
+          "medical": "Civil Hospital Outreach",
+          "mechanic": true,
+          "chain_km": 158.0
+        }
+      },
+      "geometry": { "type": "Point", "coordinates": [92.2030, 25.4410] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 8,
+        "name": "Ladrymbai Commercial Weighbridge & Depot",
+        "kind": "truck_bay",
+        "capacity": 95,
+        "attrs": {
+          "highway": "NH-6",
+          "location": "Ladrymbai, East Jaintia Hills",
+          "fuel": true,
+          "weighbridge": true,
+          "food": true,
+          "toilet": true,
+          "mechanic": true,
+          "chain_km": 195.0
+        }
+      },
+      "geometry": { "type": "Point", "coordinates": [92.3120, 25.3210] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 9,
+        "name": "Sonapur Emergency Haven & Repair Shelter",
+        "kind": "medical",
+        "capacity": 30,
+        "attrs": {
+          "highway": "NH-6",
+          "location": "Sonapur Tunnel North Approach",
+          "medical": "Disaster Relief Ambulance Post",
+          "emergency_satellite_phone": true,
+          "food": true,
+          "water": true,
+          "chain_km": 242.0
+        }
+      },
+      "geometry": { "type": "Point", "coordinates": [92.3685, 25.1142] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 10,
+        "name": "Kalain Border Transit Facility",
+        "kind": "truck_bay",
+        "capacity": 50,
+        "attrs": {
+          "highway": "NH-6",
+          "location": "Kalain, Cachar",
+          "fuel": true,
+          "food": true,
+          "toilet": true,
+          "mechanic": true,
+          "chain_km": 286.0
+        }
+      },
+      "geometry": { "type": "Point", "coordinates": [92.5620, 24.9650] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 11,
+        "name": "Badarpur Freight Fuel & Weighing Station",
+        "kind": "fuel",
+        "capacity": 60,
+        "attrs": {
+          "highway": "NH-6",
+          "location": "Badarpur Ghat",
+          "fuel": true,
+          "food": true,
+          "toilet": true,
+          "chain_km": 312.0
+        }
+      },
+      "geometry": { "type": "Point", "coordinates": [92.5850, 24.9020] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": 12,
+        "name": "Silchar Inter-State Logistics Terminal (ISBT)",
+        "kind": "truck_bay",
+        "capacity": 150,
+        "attrs": {
+          "highway": "NH-6 / Ramnagar Terminal",
+          "location": "Silchar, Assam",
+          "fuel": true,
+          "food": true,
+          "toilet": true,
+          "medical": "Silchar Medical College Line",
+          "mechanic": true,
+          "cold_storage": true,
+          "chain_km": 348.0
+        }
+      },
+      "geometry": { "type": "Point", "coordinates": [92.7910, 24.8250] }
+    }
+  ]
+}
