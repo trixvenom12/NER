@@ -14,9 +14,23 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 _CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 _PROJECT_ROOT = os.path.abspath(os.path.join(_CURRENT_DIR, ".."))
 _BUNDLED_DB = os.path.join(_CURRENT_DIR, "ner_logistics.db")
-_ORIGINAL_DB = _BUNDLED_DB if os.path.exists(_BUNDLED_DB) else os.path.join(_PROJECT_ROOT, "ner_logistics.db")
-SQLITE_SCHEMA_PATH = os.path.join(_PROJECT_ROOT, "data", "schema.sql")
-SUPABASE_SCHEMA_PATH = os.path.join(_PROJECT_ROOT, "data", "supabase_schema.sql")
+_ORIGINAL_DB = (
+    _BUNDLED_DB
+    if os.path.exists(_BUNDLED_DB)
+    else os.path.join(_PROJECT_ROOT, "ner_logistics.db")
+    if os.path.exists(os.path.join(_PROJECT_ROOT, "ner_logistics.db"))
+    else os.path.join(_PROJECT_ROOT, "data", "ner_logistics.db")
+)
+SQLITE_SCHEMA_PATH = (
+    os.path.join(_CURRENT_DIR, "schema.sql")
+    if os.path.exists(os.path.join(_CURRENT_DIR, "schema.sql"))
+    else os.path.join(_PROJECT_ROOT, "data", "schema.sql")
+)
+SUPABASE_SCHEMA_PATH = (
+    os.path.join(_CURRENT_DIR, "supabase_schema.sql")
+    if os.path.exists(os.path.join(_CURRENT_DIR, "supabase_schema.sql"))
+    else os.path.join(_PROJECT_ROOT, "data", "supabase_schema.sql")
+)
 
 try:
     from dotenv import load_dotenv
@@ -54,11 +68,20 @@ else:
     # In serverless environments (Vercel, AWS Lambda), copy DB to /tmp for write access
     if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
         TMP_DB = os.path.join("/tmp", "ner_logistics.db")
-        if os.path.exists(_ORIGINAL_DB) and not os.path.exists(TMP_DB):
+        should_copy = not os.path.exists(TMP_DB)
+        if not should_copy and os.path.exists(_ORIGINAL_DB):
+            try:
+                if os.path.getsize(TMP_DB) < os.path.getsize(_ORIGINAL_DB):
+                    should_copy = True
+            except Exception:
+                should_copy = True
+
+        if should_copy and os.path.exists(_ORIGINAL_DB):
             try:
                 shutil.copy2(_ORIGINAL_DB, TMP_DB)
             except Exception as e:
                 print(f"[WARN] Failed to copy SQLite DB to /tmp: {e}")
+
         DB_PATH = TMP_DB if os.path.exists(TMP_DB) else _ORIGINAL_DB
     else:
         DB_PATH = _ORIGINAL_DB
@@ -173,7 +196,7 @@ def get_connection():
             except Exception as e2:
                 print(f"[WARN] Supabase Postgres connection failed ({e1} | {e2}); using SQLite fallback.")
 
-    sqlite_path = _BUNDLED_DB if os.path.exists(_BUNDLED_DB) else DB_PATH
+    sqlite_path = DB_PATH if os.path.exists(DB_PATH) else (_BUNDLED_DB if os.path.exists(_BUNDLED_DB) else _ORIGINAL_DB)
     if not os.path.exists(sqlite_path) or sqlite_path.startswith("postgres"):
         for candidate in (
             _BUNDLED_DB,
@@ -194,6 +217,30 @@ def get_connection():
         conn.execute("PRAGMA foreign_keys=ON;")
     except Exception:
         pass
+
+    # Ensure tables exist (self-healing for Vercel /tmp or cold containers)
+    try:
+        conn.execute("SELECT 1 FROM facility LIMIT 1;")
+    except sqlite3.OperationalError:
+        print("[WARN] Table 'facility' missing in connected DB. Refreshing from bundled DB...")
+        conn.close()
+        if os.path.exists(_BUNDLED_DB) and sqlite_path != _BUNDLED_DB:
+            try:
+                shutil.copy2(_BUNDLED_DB, sqlite_path)
+            except Exception as e:
+                print(f"[WARN] Failed to re-copy bundled DB: {e}")
+        elif os.path.exists(SQLITE_SCHEMA_PATH):
+            try:
+                temp_conn = sqlite3.connect(sqlite_path, check_same_thread=False)
+                with open(SQLITE_SCHEMA_PATH, "r") as f:
+                    temp_conn.executescript(f.read())
+                temp_conn.close()
+            except Exception as e:
+                print(f"[WARN] Failed to run schema on DB: {e}")
+
+        conn = sqlite3.connect(sqlite_path, check_same_thread=False)
+        conn.row_factory = sqlite3.Row
+
     return conn
 
 

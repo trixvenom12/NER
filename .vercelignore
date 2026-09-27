@@ -1,0 +1,11 @@
+# Vercel Ignore file — prevents non-runtime files from inflating serverless function size
+venv/
+web_backup/
+docs/
+tests/
+*.pdf
+.git/
+.vscode/
+__pycache__/
+*.pyc
+*.pyo

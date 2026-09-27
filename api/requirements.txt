@@ -1,5 +1,5 @@
 fastapi
-uvicorn[standard]
+uvicorn
 networkx
 numpy
 httpx
@@ -7,5 +7,5 @@ joblib
 pydantic
 sqlalchemy
 psycopg2-binary
-psycopg[binary]
 python-dotenv
+
