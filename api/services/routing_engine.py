@@ -10,7 +10,6 @@ Module 5 implementation:
 import json
 import networkx as nx
 from typing import Dict, List, Any, Optional
-from shapely import wkt
 from api.services.advisories import generate_advisories
 
 PROFILES = {
