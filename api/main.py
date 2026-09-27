@@ -123,18 +123,6 @@ app.add_middleware(
 )
 
 
-@app.middleware("http")
-async def vercel_path_rewrite_middleware(request: Request, call_next):
-    """Restores the original API path when Vercel serverless rewrites request to /api/index.py."""
-    matched_path = (
-        request.headers.get("x-matched-path")
-        or request.headers.get("x-forwarded-uri")
-        or request.headers.get("x-original-uri")
-    )
-    if matched_path and request.scope["path"] in ("/api/index.py", "/api/", "/api"):
-        path_only = matched_path.split("?")[0]
-        request.scope["path"] = path_only
-    return await call_next(request)
 
 # ─── Register ALL routers ───────────────────────────────────────────
 from api.routers.routes import router as routes_router
@@ -166,32 +154,11 @@ async def health_check():
     }
 
 
-# ─── Serve Vite frontend (production build) ─────────────────────────
-_WEB_DIST = os.path.join(_PROJECT_ROOT, "web", "dist")
-if os.path.isdir(_WEB_DIST):
-    app.mount("/assets", StaticFiles(directory=os.path.join(_WEB_DIST, "assets")), name="assets")
-
-    @app.get("/{full_path:path}")
-    async def serve_spa(full_path: str):
-        """Serve Vite SPA — all non-API routes fall through to index.html."""
-        if full_path.startswith("api/") or full_path == "api":
-            return {
-                "detail": "API endpoint not found",
-                "status": 404,
-                "full_path": full_path,
-                "scope_path": request.scope.get("path"),
-                "headers": {k: v for k, v in request.headers.items()}
-            }
-        file_path = os.path.join(_WEB_DIST, full_path)
-        if os.path.isfile(file_path):
-            return FileResponse(file_path)
-        return FileResponse(os.path.join(_WEB_DIST, "index.html"))
-else:
-    @app.get("/")
-    def read_root():
-        return {
-            "status": "ok",
-            "message": "NER Logistics Intelligence API",
-            "docs": "/docs",
-            "hint": "Run 'npm run build' in web/ to serve the frontend here.",
-        }
+@app.get("/")
+def read_root():
+    return {
+        "status": "ok",
+        "service": "NER Logistics Intelligence API",
+        "docs": "/docs",
+        "version": "1.0.0",
+    }

@@ -7,7 +7,7 @@
       "destination": "/api/index.py"
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!assets|favicon|registerSW|sw|manifest|icons).*)",
       "destination": "/index.html"
     }
   ]
