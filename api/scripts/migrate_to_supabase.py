@@ -20,6 +20,12 @@ _PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".
 SQLITE_DB_PATH = os.path.join(_PROJECT_ROOT, "data", "ner_logistics.db")
 SCHEMA_SQL_PATH = os.path.join(_PROJECT_ROOT, "data", "supabase_schema.sql")
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(_PROJECT_ROOT, ".env"))
+except Exception:
+    pass
+
 
 def run_migration(db_url: str):
     import psycopg2

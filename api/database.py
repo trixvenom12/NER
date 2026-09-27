@@ -17,6 +17,12 @@ _ORIGINAL_DB = os.path.join(_PROJECT_ROOT, "data", "ner_logistics.db")
 SQLITE_SCHEMA_PATH = os.path.join(_PROJECT_ROOT, "data", "schema.sql")
 SUPABASE_SCHEMA_PATH = os.path.join(_PROJECT_ROOT, "data", "supabase_schema.sql")
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(_PROJECT_ROOT, ".env"))
+except Exception:
+    pass
+
 # Read database URL from environment
 RAW_DB_URL = os.environ.get("DATABASE_URL") or os.environ.get("SUPABASE_DB_URL") or ""
 IS_POSTGRES = RAW_DB_URL.startswith("postgres://") or RAW_DB_URL.startswith("postgresql://")
