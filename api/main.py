@@ -175,7 +175,13 @@ if os.path.isdir(_WEB_DIST):
     async def serve_spa(full_path: str):
         """Serve Vite SPA — all non-API routes fall through to index.html."""
         if full_path.startswith("api/") or full_path == "api":
-            return {"detail": "API endpoint not found", "status": 404}
+            return {
+                "detail": "API endpoint not found",
+                "status": 404,
+                "full_path": full_path,
+                "scope_path": request.scope.get("path"),
+                "headers": {k: v for k, v in request.headers.items()}
+            }
         file_path = os.path.join(_WEB_DIST, full_path)
         if os.path.isfile(file_path):
             return FileResponse(file_path)
