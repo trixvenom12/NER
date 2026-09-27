@@ -30,7 +30,7 @@ async def get_risk_segments(
     features = []
     for r in rows:
         seg_id = r["id"]
-        geom = json.loads(r["geom_geojson"])
+        geom = json.loads(r["geom_geojson"]) if isinstance(r["geom_geojson"], str) else (r["geom_geojson"] or {})
         risk_info = risk_cache.get(seg_id, {"score": 15.0, "band": "safe", "factors": {}})
 
         features.append({
@@ -71,7 +71,7 @@ async def get_risk_heatmap(
     features = []
     for r in rows:
         seg_id = r["id"]
-        geom = json.loads(r["geom_geojson"])
+        geom = json.loads(r["geom_geojson"]) if isinstance(r["geom_geojson"], str) else (r["geom_geojson"] or {})
         coords = geom.get("coordinates", [])
         if coords:
             # Midpoint

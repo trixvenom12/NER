@@ -32,8 +32,12 @@ def test_module_2_database_schema():
     """Verify all 6 core tables exist in the database."""
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    tables = {r[0] for r in cur.fetchall()}
+    try:
+        cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public';")
+        tables = {r["table_name"] if isinstance(r, dict) else r[0] for r in cur.fetchall()}
+    except Exception:
+        cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        tables = {r["name"] if isinstance(r, dict) else r[0] for r in cur.fetchall()}
     conn.close()
 
     required = {"segment", "weather_obs", "incident", "segment_risk", "facility", "report"}

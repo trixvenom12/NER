@@ -30,7 +30,7 @@ async def list_facilities(kind: Optional[str] = None, db = Depends(get_db)):
             "name": r["name"],
             "kind": r["kind"],
             "capacity": r["capacity"],
-            "attrs": json.loads(r["attrs"]),
+            "attrs": json.loads(r["attrs"]) if isinstance(r["attrs"], str) else (r["attrs"] or {}),
             "lat": r["lat"],
             "lon": r["lon"],
             "availability": predict_truck_bay_availability(r["id"], r["capacity"]) if r["kind"] == "truck_bay" else None

@@ -56,10 +56,28 @@ class PostgresCursorWrapper:
     """Adapts psycopg2 cursor to mirror sqlite3 cursor semantics (dict access & '?' params)."""
     def __init__(self, raw_cur: Any):
         self._cur = raw_cur
+        self.lastrowid = None
 
     def execute(self, query: str, params: Any = None):
         if params is not None and "?" in query:
             query = query.replace("?", "%s")
+
+        trimmed = query.strip()
+        is_insert = trimmed.upper().startswith("INSERT INTO")
+        if is_insert and "RETURNING" not in query.upper():
+            query_with_returning = trimmed.rstrip(";") + " RETURNING id;"
+            try:
+                if params is not None:
+                    res = self._cur.execute(query_with_returning, params)
+                else:
+                    res = self._cur.execute(query_with_returning)
+                row = self._cur.fetchone()
+                if row:
+                    self.lastrowid = row.get("id") if isinstance(row, dict) else row[0]
+                return res
+            except Exception:
+                pass
+
         if params is not None:
             return self._cur.execute(query, params)
         return self._cur.execute(query)

@@ -74,10 +74,16 @@ async def get_seasonal_breakdown(db = Depends(get_db)):
         dur = r["duration_hours"] or 0.0
         
         kind_counts[kind] += 1
-        if date_str and len(date_str) >= 7:
-            m = date_str[5:7]
-            month_counts[m] += 1
-            month_hours[m] += dur
+        if date_str:
+            if hasattr(date_str, "strftime"):
+                m = date_str.strftime("%m")
+            elif isinstance(date_str, str) and len(date_str) >= 7:
+                m = date_str[5:7]
+            else:
+                m = None
+            if m:
+                month_counts[m] += 1
+                month_hours[m] += dur
 
     monthly_stats = []
     for m_num in sorted(month_names.keys()):

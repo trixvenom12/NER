@@ -36,7 +36,7 @@ def run_migration(db_url: str):
         db_url = db_url.replace("postgres://", "postgresql://", 1)
 
     print(f"\n========================================================")
-    print(f"🚀 MIGRATING NER LOGISTICS DATA TO SUPABASE")
+    print(f"[*] MIGRATING NER LOGISTICS DATA TO SUPABASE")
     print(f"========================================================")
     print(f"[*] Target: {db_url.split('@')[-1] if '@' in db_url else 'Supabase'}")
     print(f"[*] Source SQLite: {SQLITE_DB_PATH}")
@@ -51,9 +51,9 @@ def run_migration(db_url: str):
         pg_conn = psycopg2.connect(db_url)
         pg_conn.autocommit = False
         pg_cur = pg_conn.cursor()
-        print("  ✓ Connected successfully.")
+        print("  [OK] Connected successfully.")
     except Exception as e:
-        print(f"  ✗ Connection failed: {e}")
+        print(f"  [ERROR] Connection failed: {e}")
         print("\nPlease check your Supabase connection string and password.")
         sys.exit(1)
 
@@ -65,12 +65,12 @@ def run_migration(db_url: str):
         try:
             pg_cur.execute(schema_sql)
             pg_conn.commit()
-            print("  ✓ Tables, indexes, and RLS policies created.")
+            print("  [OK] Tables, indexes, and RLS policies created.")
         except Exception as e:
             pg_conn.rollback()
-            print(f"  ⚠ Schema notice: {e}")
+            print(f"  [WARN] Schema notice: {e}")
     else:
-        print(f"  ⚠ Schema file not found at {SCHEMA_SQL_PATH}")
+        print(f"  [WARN] Schema file not found at {SCHEMA_SQL_PATH}")
 
     # 3. Read SQLite and Transfer
     print("\n[3/4] Migrating data from SQLite...")
@@ -113,7 +113,7 @@ def run_migration(db_url: str):
         insert_sql = f"INSERT INTO {table} ({col_names}) VALUES %s ON CONFLICT DO NOTHING;"
         execute_values(pg_cur, f"INSERT INTO {table} ({col_names}) VALUES %s", values_to_insert)
         stats[table] = len(values_to_insert)
-        print(f"  ✓ {table:<15} : {len(values_to_insert)} rows migrated")
+        print(f"  [OK] {table:<15} : {len(values_to_insert)} rows migrated")
 
     # Reset sequences for auto-increment IDs
     print("\n[4/4] Aligning PostgreSQL ID sequences...")
@@ -128,10 +128,10 @@ def run_migration(db_url: str):
     pg_conn.close()
 
     print("\n========================================================")
-    print("✅ MIGRATION COMPLETED SUCCESSFULLY")
+    print("[SUCCESS] MIGRATION COMPLETED SUCCESSFULLY")
     print("========================================================")
     for tbl, cnt in stats.items():
-        print(f"  • {tbl:<16}: {cnt} records in Supabase")
+        print(f"  * {tbl:<16}: {cnt} records in Supabase")
     print("========================================================\n")
 
 

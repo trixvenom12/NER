@@ -47,7 +47,7 @@ async def sync_offline_reports(
         VALUES (?, ?, ?, ?, 1, ?, ?);
         """, (item.created_at, batch.device_id, item.kind, item.note or "", item.lat, item.lon))
         
-        server_id = cur.lastrowid
+        server_id = cur.lastrowid or 1
         PROCESSED_CLIENT_IDS.add(item.client_id)
 
         # Immediate risk feedback: darken road segments in proximity

@@ -39,7 +39,7 @@ async def create_report(
     VALUES (?, ?, ?, ?, 1, ?, ?);
     """, (now_iso, device_id, req.kind, req.note or "", req.lat, req.lon))
     
-    report_id = cur.lastrowid
+    report_id = cur.lastrowid or 1
     db.commit()
 
     # If report is blocked or slide, update nearby segment risk in memory cache
@@ -76,7 +76,7 @@ async def trigger_emergency_sos(
     VALUES (?, ?, 'sos', ?, 1, ?, ?);
     """, (now_iso, device_id, req.note, req.lat, req.lon))
     
-    sos_id = cur.lastrowid
+    sos_id = cur.lastrowid or 1
     db.commit()
 
     # Find nearest 3 facilities
@@ -91,7 +91,7 @@ async def trigger_emergency_sos(
             "name": f["name"],
             "kind": f["kind"],
             "distance_km": dist_km,
-            "attrs": json.loads(f["attrs"])
+            "attrs": json.loads(f["attrs"]) if isinstance(f["attrs"], str) else (f["attrs"] or {})
         })
     sorted_facs.sort(key=lambda x: x["distance_km"])
     nearest_three = sorted_facs[:3]
