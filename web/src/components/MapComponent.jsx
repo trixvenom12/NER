@@ -1,7 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import * as maplibregl from 'maplibre-gl';
+import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import { useMapContext } from '../utils/MapContext.jsx';
 import { fetchRiskSegments, fetchFacilities, fetchRiskHeatmap, fetchDeformationLayer } from '../utils/api.js';
+
+if (maplibregl.setWorkerUrl) {
+  maplibregl.setWorkerUrl(workerUrl);
+}
 
 // Risk band color mapping (from Build Manual)
 const BAND_COLORS = {
