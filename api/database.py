@@ -11,9 +11,10 @@ from typing import Any
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-# Resolve DB and schema paths relative to project root
-_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-_ORIGINAL_DB = os.path.join(_PROJECT_ROOT, "data", "ner_logistics.db")
+_CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+_PROJECT_ROOT = os.path.abspath(os.path.join(_CURRENT_DIR, ".."))
+_BUNDLED_DB = os.path.join(_CURRENT_DIR, "ner_logistics.db")
+_ORIGINAL_DB = _BUNDLED_DB if os.path.exists(_BUNDLED_DB) else os.path.join(_PROJECT_ROOT, "ner_logistics.db")
 SQLITE_SCHEMA_PATH = os.path.join(_PROJECT_ROOT, "data", "schema.sql")
 SUPABASE_SCHEMA_PATH = os.path.join(_PROJECT_ROOT, "data", "supabase_schema.sql")
 
@@ -172,14 +173,16 @@ def get_connection():
             except Exception as e2:
                 print(f"[WARN] Supabase Postgres connection failed ({e1} | {e2}); using SQLite fallback.")
 
-    sqlite_path = DB_PATH
-    if not os.path.exists(sqlite_path):
-        root_db = os.path.join(_PROJECT_ROOT, "ner_logistics.db")
-        data_db = os.path.join(_PROJECT_ROOT, "data", "ner_logistics.db")
-        if os.path.exists(root_db):
-            sqlite_path = root_db
-        elif os.path.exists(data_db):
-            sqlite_path = data_db
+    sqlite_path = _BUNDLED_DB if os.path.exists(_BUNDLED_DB) else DB_PATH
+    if not os.path.exists(sqlite_path) or sqlite_path.startswith("postgres"):
+        for candidate in (
+            _BUNDLED_DB,
+            os.path.join(_PROJECT_ROOT, "ner_logistics.db"),
+            os.path.join(_PROJECT_ROOT, "data", "ner_logistics.db"),
+        ):
+            if os.path.exists(candidate):
+                sqlite_path = candidate
+                break
 
     conn = sqlite3.connect(sqlite_path, check_same_thread=False)
     conn.row_factory = sqlite3.Row

@@ -63,8 +63,12 @@ def ensure_initialized(app: FastAPI):
 
     # 2. Load road graph if not already loaded
     if not hasattr(app.state, "graph") or app.state.graph is None:
-        graph_path = os.path.join(_PROJECT_ROOT, "data", "graph", "ner_drive.graphml")
-        if os.path.exists(graph_path):
+        graph_candidates = [
+            os.path.join(os.path.dirname(__file__), "graph", "ner_drive.graphml"),
+            os.path.join(_PROJECT_ROOT, "data", "graph", "ner_drive.graphml"),
+        ]
+        graph_path = next((p for p in graph_candidates if os.path.exists(p)), None)
+        if graph_path:
             try:
                 app.state.graph = nx.read_graphml(graph_path)
                 print(f"[OK] Road graph loaded: {app.state.graph.number_of_nodes()} nodes, "
@@ -73,13 +77,17 @@ def ensure_initialized(app: FastAPI):
                 print(f"[WARN] Failed to load graph: {e}")
                 app.state.graph = None
         else:
-            print(f"[WARN] Graph file not found at {graph_path}. Run: python build/build_graph.py")
+            print(f"[WARN] Graph file not found. Candidates: {graph_candidates}")
             app.state.graph = None
 
     # 3. Load ML risk model if not already loaded
     if not hasattr(app.state, "model") or app.state.model is None:
-        model_path = os.path.join(_PROJECT_ROOT, "models", "risk_model.joblib")
-        if os.path.exists(model_path):
+        model_candidates = [
+            os.path.join(os.path.dirname(__file__), "models_data", "risk_model.joblib"),
+            os.path.join(_PROJECT_ROOT, "models", "risk_model.joblib"),
+        ]
+        model_path = next((p for p in model_candidates if os.path.exists(p)), None)
+        if model_path:
             try:
                 app.state.model = joblib.load(model_path)
                 print(f"[OK] ML risk model loaded from {model_path}")

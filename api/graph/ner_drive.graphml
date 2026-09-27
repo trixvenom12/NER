@@ -1,0 +1,968 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d14" for="edge" attr.name="v" attr.type="long" />
+  <key id="d13" for="edge" attr.name="u" attr.type="long" />
+  <key id="d12" for="edge" attr.name="geometry" attr.type="string" />
+  <key id="d11" for="edge" attr.name="susceptibility" attr.type="double" />
+  <key id="d10" for="edge" attr.name="mean_slope_deg" attr.type="double" />
+  <key id="d9" for="edge" attr.name="speed_kph" attr.type="long" />
+  <key id="d8" for="edge" attr.name="length" attr.type="double" />
+  <key id="d7" for="edge" attr.name="highway" attr.type="string" />
+  <key id="d6" for="edge" attr.name="road_ref" attr.type="string" />
+  <key id="d5" for="edge" attr.name="osm_way_id" attr.type="long" />
+  <key id="d4" for="edge" attr.name="segment_id" attr.type="long" />
+  <key id="d3" for="node" attr.name="elevation_m" attr.type="long" />
+  <key id="d2" for="node" attr.name="x" attr.type="double" />
+  <key id="d1" for="node" attr.name="y" attr.type="double" />
+  <key id="d0" for="node" attr.name="name" attr.type="string" />
+  <graph edgedefault="directed">
+    <node id="101">
+      <data key="d0">Guwahati_Khanapara</data>
+      <data key="d1">26.115</data>
+      <data key="d2">91.821</data>
+      <data key="d3">55</data>
+    </node>
+    <node id="102">
+      <data key="d0">Byrnihat_Checkpost</data>
+      <data key="d1">26.042</data>
+      <data key="d2">91.865</data>
+      <data key="d3">90</data>
+    </node>
+    <node id="103">
+      <data key="d0">Nongpoh_North</data>
+      <data key="d1">25.932</data>
+      <data key="d2">91.878</data>
+      <data key="d3">485</data>
+    </node>
+    <node id="104">
+      <data key="d0">Nongpoh_Town</data>
+      <data key="d1">25.9012</data>
+      <data key="d2">91.8805</data>
+      <data key="d3">520</data>
+    </node>
+    <node id="105">
+      <data key="d0">Umsning_Junction</data>
+      <data key="d1">25.762</data>
+      <data key="d2">91.9051</data>
+      <data key="d3">790</data>
+    </node>
+    <node id="106">
+      <data key="d0">Umiam_Barapani</data>
+      <data key="d1">25.661</data>
+      <data key="d2">91.898</data>
+      <data key="d3">1020</data>
+    </node>
+    <node id="107">
+      <data key="d0">Mawiong_Shillong</data>
+      <data key="d1">25.602</data>
+      <data key="d2">91.883</data>
+      <data key="d3">1420</data>
+    </node>
+    <node id="108">
+      <data key="d0">Shillong_Central</data>
+      <data key="d1">25.5788</data>
+      <data key="d2">91.8933</data>
+      <data key="d3">1525</data>
+    </node>
+    <node id="109">
+      <data key="d0">Laitkor_Ghat</data>
+      <data key="d1">25.535</data>
+      <data key="d2">91.932</data>
+      <data key="d3">1680</data>
+    </node>
+    <node id="110">
+      <data key="d0">Mawryngkneng_Junction</data>
+      <data key="d1">25.556</data>
+      <data key="d2">92.052</data>
+      <data key="d3">1390</data>
+    </node>
+    <node id="111">
+      <data key="d0">Shillong_Bypass_Mid</data>
+      <data key="d1">25.632</data>
+      <data key="d2">91.985</data>
+      <data key="d3">1210</data>
+    </node>
+    <node id="112">
+      <data key="d0">Ummulong</data>
+      <data key="d1">25.495</data>
+      <data key="d2">92.124</data>
+      <data key="d3">1340</data>
+    </node>
+    <node id="113">
+      <data key="d0">Jowai_Bypass</data>
+      <data key="d1">25.441</data>
+      <data key="d2">92.203</data>
+      <data key="d3">1380</data>
+    </node>
+    <node id="114">
+      <data key="d0">Khliehtyrshi</data>
+      <data key="d1">25.412</data>
+      <data key="d2">92.245</data>
+      <data key="d3">1310</data>
+    </node>
+    <node id="115">
+      <data key="d0">Ladrymbai</data>
+      <data key="d1">25.321</data>
+      <data key="d2">92.312</data>
+      <data key="d3">1250</data>
+    </node>
+    <node id="116">
+      <data key="d0">Khliehriat</data>
+      <data key="d1">25.264</data>
+      <data key="d2">92.352</data>
+      <data key="d3">1180</data>
+    </node>
+    <node id="117">
+      <data key="d0">Lumshnong_Quarry</data>
+      <data key="d1">25.185</data>
+      <data key="d2">92.378</data>
+      <data key="d3">620</data>
+    </node>
+    <node id="118">
+      <data key="d0">Sonapur_Tunnel_North</data>
+      <data key="d1">25.118</data>
+      <data key="d2">92.365</data>
+      <data key="d3">310</data>
+    </node>
+    <node id="119">
+      <data key="d0">Sonapur_Tunnel_South</data>
+      <data key="d1">25.111</data>
+      <data key="d2">92.372</data>
+      <data key="d3">260</data>
+    </node>
+    <node id="120">
+      <data key="d0">Sonapur_Ridge_Detour</data>
+      <data key="d1">25.129</data>
+      <data key="d2">92.392</data>
+      <data key="d3">580</data>
+    </node>
+    <node id="121">
+      <data key="d0">Malidor_Border</data>
+      <data key="d1">25.042</data>
+      <data key="d2">92.421</data>
+      <data key="d3">140</data>
+    </node>
+    <node id="122">
+      <data key="d0">Umkiang</data>
+      <data key="d1">25.068</data>
+      <data key="d2">92.385</data>
+      <data key="d3">190</data>
+    </node>
+    <node id="123">
+      <data key="d0">Kalain_Junction</data>
+      <data key="d1">24.965</data>
+      <data key="d2">92.562</data>
+      <data key="d3">45</data>
+    </node>
+    <node id="124">
+      <data key="d0">Badarpur_Ghat</data>
+      <data key="d1">24.902</data>
+      <data key="d2">92.585</data>
+      <data key="d3">25</data>
+    </node>
+    <node id="125">
+      <data key="d0">Panchgram</data>
+      <data key="d1">24.872</data>
+      <data key="d2">92.651</data>
+      <data key="d3">22</data>
+    </node>
+    <node id="126">
+      <data key="d0">Silchar_Ramnagar</data>
+      <data key="d1">24.838</data>
+      <data key="d2">92.742</data>
+      <data key="d3">26</data>
+    </node>
+    <node id="127">
+      <data key="d0">Silchar_ISBT</data>
+      <data key="d1">24.825</data>
+      <data key="d2">92.791</data>
+      <data key="d3">25</data>
+    </node>
+    <node id="128">
+      <data key="d0">Borkhola_Bypass</data>
+      <data key="d1">24.912</data>
+      <data key="d2">92.721</data>
+      <data key="d3">30</data>
+    </node>
+    <edge source="101" target="102" id="0">
+      <data key="d4">1</data>
+      <data key="d5">100001</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">10891.9</data>
+      <data key="d9">50</data>
+      <data key="d10">0.2</data>
+      <data key="d11">0.12</data>
+      <data key="d12">LINESTRING (91.821 26.115, 91.865 26.042)</data>
+      <data key="d13">101</data>
+      <data key="d14">102</data>
+    </edge>
+    <edge source="102" target="101" id="0">
+      <data key="d4">2</data>
+      <data key="d5">100002</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">10891.9</data>
+      <data key="d9">50</data>
+      <data key="d10">0.2</data>
+      <data key="d11">0.12</data>
+      <data key="d12">LINESTRING (91.865 26.042, 91.821 26.115)</data>
+      <data key="d13">102</data>
+      <data key="d14">101</data>
+    </edge>
+    <edge source="102" target="103" id="0">
+      <data key="d4">3</data>
+      <data key="d5">100003</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">14514.3</data>
+      <data key="d9">50</data>
+      <data key="d10">1.6</data>
+      <data key="d11">0.22</data>
+      <data key="d12">LINESTRING (91.865 26.042, 91.878 25.932)</data>
+      <data key="d13">102</data>
+      <data key="d14">103</data>
+    </edge>
+    <edge source="103" target="102" id="0">
+      <data key="d4">4</data>
+      <data key="d5">100004</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">14514.3</data>
+      <data key="d9">50</data>
+      <data key="d10">1.6</data>
+      <data key="d11">0.22</data>
+      <data key="d12">LINESTRING (91.878 25.932, 91.865 26.042)</data>
+      <data key="d13">103</data>
+      <data key="d14">102</data>
+    </edge>
+    <edge source="103" target="104" id="0">
+      <data key="d4">5</data>
+      <data key="d5">100005</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">4052.0</data>
+      <data key="d9">45</data>
+      <data key="d10">0.5</data>
+      <data key="d11">0.18</data>
+      <data key="d12">LINESTRING (91.878 25.932, 91.8805 25.9012)</data>
+      <data key="d13">103</data>
+      <data key="d14">104</data>
+    </edge>
+    <edge source="104" target="103" id="0">
+      <data key="d4">6</data>
+      <data key="d5">100006</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">4052.0</data>
+      <data key="d9">45</data>
+      <data key="d10">0.5</data>
+      <data key="d11">0.18</data>
+      <data key="d12">LINESTRING (91.8805 25.9012, 91.878 25.932)</data>
+      <data key="d13">104</data>
+      <data key="d14">103</data>
+    </edge>
+    <edge source="104" target="105" id="0">
+      <data key="d4">7</data>
+      <data key="d5">100007</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">18494.1</data>
+      <data key="d9">45</data>
+      <data key="d10">0.8</data>
+      <data key="d11">0.25</data>
+      <data key="d12">LINESTRING (91.8805 25.9012, 91.9051 25.762)</data>
+      <data key="d13">104</data>
+      <data key="d14">105</data>
+    </edge>
+    <edge source="105" target="104" id="0">
+      <data key="d4">8</data>
+      <data key="d5">100008</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">18494.1</data>
+      <data key="d9">45</data>
+      <data key="d10">0.8</data>
+      <data key="d11">0.25</data>
+      <data key="d12">LINESTRING (91.9051 25.762, 91.8805 25.9012)</data>
+      <data key="d13">105</data>
+      <data key="d14">104</data>
+    </edge>
+    <edge source="105" target="106" id="0">
+      <data key="d4">9</data>
+      <data key="d5">100009</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">13278.8</data>
+      <data key="d9">40</data>
+      <data key="d10">1.0</data>
+      <data key="d11">0.38</data>
+      <data key="d12">LINESTRING (91.9051 25.762, 91.898 25.661)</data>
+      <data key="d13">105</data>
+      <data key="d14">106</data>
+    </edge>
+    <edge source="105" target="111" id="0">
+      <data key="d4">19</data>
+      <data key="d5">100019</data>
+      <data key="d6">Shillong-Bypass</data>
+      <data key="d7">trunk</data>
+      <data key="d8">19498.6</data>
+      <data key="d9">60</data>
+      <data key="d10">1.2</data>
+      <data key="d11">0.18</data>
+      <data key="d12">LINESTRING (91.9051 25.762, 91.985 25.632)</data>
+      <data key="d13">105</data>
+      <data key="d14">111</data>
+    </edge>
+    <edge source="106" target="105" id="0">
+      <data key="d4">10</data>
+      <data key="d5">100010</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">13278.8</data>
+      <data key="d9">40</data>
+      <data key="d10">1.0</data>
+      <data key="d11">0.38</data>
+      <data key="d12">LINESTRING (91.898 25.661, 91.9051 25.762)</data>
+      <data key="d13">106</data>
+      <data key="d14">105</data>
+    </edge>
+    <edge source="106" target="107" id="0">
+      <data key="d4">11</data>
+      <data key="d5">100011</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">7942.2</data>
+      <data key="d9">35</data>
+      <data key="d10">2.9</data>
+      <data key="d11">0.42</data>
+      <data key="d12">LINESTRING (91.898 25.661, 91.883 25.602)</data>
+      <data key="d13">106</data>
+      <data key="d14">107</data>
+    </edge>
+    <edge source="107" target="106" id="0">
+      <data key="d4">12</data>
+      <data key="d5">100012</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">7942.2</data>
+      <data key="d9">35</data>
+      <data key="d10">2.9</data>
+      <data key="d11">0.42</data>
+      <data key="d12">LINESTRING (91.883 25.602, 91.898 25.661)</data>
+      <data key="d13">107</data>
+      <data key="d14">106</data>
+    </edge>
+    <edge source="107" target="108" id="0">
+      <data key="d4">13</data>
+      <data key="d5">100013</data>
+      <data key="d6">GS-Road</data>
+      <data key="d7">primary</data>
+      <data key="d8">3279.0</data>
+      <data key="d9">30</data>
+      <data key="d10">1.8</data>
+      <data key="d11">0.2</data>
+      <data key="d12">LINESTRING (91.883 25.602, 91.8933 25.5788)</data>
+      <data key="d13">107</data>
+      <data key="d14">108</data>
+    </edge>
+    <edge source="108" target="107" id="0">
+      <data key="d4">14</data>
+      <data key="d5">100014</data>
+      <data key="d6">GS-Road</data>
+      <data key="d7">primary</data>
+      <data key="d8">3279.0</data>
+      <data key="d9">30</data>
+      <data key="d10">1.8</data>
+      <data key="d11">0.2</data>
+      <data key="d12">LINESTRING (91.8933 25.5788, 91.883 25.602)</data>
+      <data key="d13">108</data>
+      <data key="d14">107</data>
+    </edge>
+    <edge source="108" target="109" id="0">
+      <data key="d4">15</data>
+      <data key="d5">100015</data>
+      <data key="d6">Jowai-Road</data>
+      <data key="d7">primary</data>
+      <data key="d8">7349.4</data>
+      <data key="d9">35</data>
+      <data key="d10">24.0</data>
+      <data key="d11">0.32</data>
+      <data key="d12">LINESTRING (91.8933 25.5788, 91.932 25.535)</data>
+      <data key="d13">108</data>
+      <data key="d14">109</data>
+    </edge>
+    <edge source="109" target="108" id="0">
+      <data key="d4">16</data>
+      <data key="d5">100016</data>
+      <data key="d6">Jowai-Road</data>
+      <data key="d7">primary</data>
+      <data key="d8">7349.4</data>
+      <data key="d9">35</data>
+      <data key="d10">24.0</data>
+      <data key="d11">0.32</data>
+      <data key="d12">LINESTRING (91.932 25.535, 91.8933 25.5788)</data>
+      <data key="d13">109</data>
+      <data key="d14">108</data>
+    </edge>
+    <edge source="109" target="110" id="0">
+      <data key="d4">17</data>
+      <data key="d5">100017</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">14470.8</data>
+      <data key="d9">40</data>
+      <data key="d10">24.0</data>
+      <data key="d11">0.35</data>
+      <data key="d12">LINESTRING (91.932 25.535, 92.052 25.556)</data>
+      <data key="d13">109</data>
+      <data key="d14">110</data>
+    </edge>
+    <edge source="110" target="109" id="0">
+      <data key="d4">18</data>
+      <data key="d5">100018</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">14470.8</data>
+      <data key="d9">40</data>
+      <data key="d10">24.0</data>
+      <data key="d11">0.35</data>
+      <data key="d12">LINESTRING (92.052 25.556, 91.932 25.535)</data>
+      <data key="d13">110</data>
+      <data key="d14">109</data>
+    </edge>
+    <edge source="110" target="111" id="0">
+      <data key="d4">22</data>
+      <data key="d5">100022</data>
+      <data key="d6">Shillong-Bypass</data>
+      <data key="d7">trunk</data>
+      <data key="d8">12739.7</data>
+      <data key="d9">60</data>
+      <data key="d10">0.8</data>
+      <data key="d11">0.2</data>
+      <data key="d12">LINESTRING (92.052 25.556, 91.985 25.632)</data>
+      <data key="d13">110</data>
+      <data key="d14">111</data>
+    </edge>
+    <edge source="110" target="112" id="0">
+      <data key="d4">23</data>
+      <data key="d5">100023</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">11693.5</data>
+      <data key="d9">45</data>
+      <data key="d10">0.2</data>
+      <data key="d11">0.24</data>
+      <data key="d12">LINESTRING (92.052 25.556, 92.124 25.495)</data>
+      <data key="d13">110</data>
+      <data key="d14">112</data>
+    </edge>
+    <edge source="111" target="105" id="0">
+      <data key="d4">20</data>
+      <data key="d5">100020</data>
+      <data key="d6">Shillong-Bypass</data>
+      <data key="d7">trunk</data>
+      <data key="d8">19498.6</data>
+      <data key="d9">60</data>
+      <data key="d10">1.2</data>
+      <data key="d11">0.18</data>
+      <data key="d12">LINESTRING (91.985 25.632, 91.9051 25.762)</data>
+      <data key="d13">111</data>
+      <data key="d14">105</data>
+    </edge>
+    <edge source="111" target="110" id="0">
+      <data key="d4">21</data>
+      <data key="d5">100021</data>
+      <data key="d6">Shillong-Bypass</data>
+      <data key="d7">trunk</data>
+      <data key="d8">12739.7</data>
+      <data key="d9">60</data>
+      <data key="d10">0.8</data>
+      <data key="d11">0.2</data>
+      <data key="d12">LINESTRING (91.985 25.632, 92.052 25.556)</data>
+      <data key="d13">111</data>
+      <data key="d14">110</data>
+    </edge>
+    <edge source="112" target="110" id="0">
+      <data key="d4">24</data>
+      <data key="d5">100024</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">11693.5</data>
+      <data key="d9">45</data>
+      <data key="d10">0.2</data>
+      <data key="d11">0.24</data>
+      <data key="d12">LINESTRING (92.124 25.495, 92.052 25.556)</data>
+      <data key="d13">112</data>
+      <data key="d14">110</data>
+    </edge>
+    <edge source="112" target="113" id="0">
+      <data key="d4">25</data>
+      <data key="d5">100025</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">11738.0</data>
+      <data key="d9">45</data>
+      <data key="d10">0.2</data>
+      <data key="d11">0.28</data>
+      <data key="d12">LINESTRING (92.124 25.495, 92.203 25.441)</data>
+      <data key="d13">112</data>
+      <data key="d14">113</data>
+    </edge>
+    <edge source="113" target="112" id="0">
+      <data key="d4">26</data>
+      <data key="d5">100026</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">11738.0</data>
+      <data key="d9">45</data>
+      <data key="d10">0.2</data>
+      <data key="d11">0.28</data>
+      <data key="d12">LINESTRING (92.203 25.441, 92.124 25.495)</data>
+      <data key="d13">113</data>
+      <data key="d14">112</data>
+    </edge>
+    <edge source="113" target="114" id="0">
+      <data key="d4">27</data>
+      <data key="d5">100027</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">6264.9</data>
+      <data key="d9">45</data>
+      <data key="d10">0.6</data>
+      <data key="d11">0.25</data>
+      <data key="d12">LINESTRING (92.203 25.441, 92.245 25.412)</data>
+      <data key="d13">113</data>
+      <data key="d14">114</data>
+    </edge>
+    <edge source="114" target="113" id="0">
+      <data key="d4">28</data>
+      <data key="d5">100028</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">6264.9</data>
+      <data key="d9">45</data>
+      <data key="d10">0.6</data>
+      <data key="d11">0.25</data>
+      <data key="d12">LINESTRING (92.245 25.412, 92.203 25.441)</data>
+      <data key="d13">114</data>
+      <data key="d14">113</data>
+    </edge>
+    <edge source="114" target="115" id="0">
+      <data key="d4">29</data>
+      <data key="d5">100029</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">14341.0</data>
+      <data key="d9">40</data>
+      <data key="d10">0.2</data>
+      <data key="d11">0.32</data>
+      <data key="d12">LINESTRING (92.245 25.412, 92.312 25.321)</data>
+      <data key="d13">114</data>
+      <data key="d14">115</data>
+    </edge>
+    <edge source="115" target="114" id="0">
+      <data key="d4">30</data>
+      <data key="d5">100030</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">14341.0</data>
+      <data key="d9">40</data>
+      <data key="d10">0.2</data>
+      <data key="d11">0.32</data>
+      <data key="d12">LINESTRING (92.312 25.321, 92.245 25.412)</data>
+      <data key="d13">115</data>
+      <data key="d14">114</data>
+    </edge>
+    <edge source="115" target="116" id="0">
+      <data key="d4">31</data>
+      <data key="d5">100031</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">8857.4</data>
+      <data key="d9">40</data>
+      <data key="d10">0.5</data>
+      <data key="d11">0.3</data>
+      <data key="d12">LINESTRING (92.312 25.321, 92.352 25.264)</data>
+      <data key="d13">115</data>
+      <data key="d14">116</data>
+    </edge>
+    <edge source="116" target="115" id="0">
+      <data key="d4">32</data>
+      <data key="d5">100032</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">8857.4</data>
+      <data key="d9">40</data>
+      <data key="d10">0.5</data>
+      <data key="d11">0.3</data>
+      <data key="d12">LINESTRING (92.352 25.264, 92.312 25.321)</data>
+      <data key="d13">116</data>
+      <data key="d14">115</data>
+    </edge>
+    <edge source="116" target="117" id="0">
+      <data key="d4">33</data>
+      <data key="d5">100033</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">10815.3</data>
+      <data key="d9">35</data>
+      <data key="d10">31.5</data>
+      <data key="d11">0.58</data>
+      <data key="d12">LINESTRING (92.352 25.264, 92.378 25.185)</data>
+      <data key="d13">116</data>
+      <data key="d14">117</data>
+    </edge>
+    <edge source="117" target="116" id="0">
+      <data key="d4">34</data>
+      <data key="d5">100034</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">10815.3</data>
+      <data key="d9">35</data>
+      <data key="d10">31.5</data>
+      <data key="d11">0.58</data>
+      <data key="d12">LINESTRING (92.378 25.185, 92.352 25.264)</data>
+      <data key="d13">117</data>
+      <data key="d14">116</data>
+    </edge>
+    <edge source="117" target="118" id="0">
+      <data key="d4">35</data>
+      <data key="d5">100035</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">8925.6</data>
+      <data key="d9">35</data>
+      <data key="d10">31.5</data>
+      <data key="d11">0.65</data>
+      <data key="d12">LINESTRING (92.378 25.185, 92.365 25.118)</data>
+      <data key="d13">117</data>
+      <data key="d14">118</data>
+    </edge>
+    <edge source="117" target="120" id="0">
+      <data key="d4">39</data>
+      <data key="d5">100039</data>
+      <data key="d6">Sonapur-Old-Ridge-Detour</data>
+      <data key="d7">secondary</data>
+      <data key="d8">7533.5</data>
+      <data key="d9">25</data>
+      <data key="d10">31.5</data>
+      <data key="d11">0.4</data>
+      <data key="d12">LINESTRING (92.378 25.185, 92.392 25.129)</data>
+      <data key="d13">117</data>
+      <data key="d14">120</data>
+    </edge>
+    <edge source="118" target="117" id="0">
+      <data key="d4">36</data>
+      <data key="d5">100036</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">8925.6</data>
+      <data key="d9">35</data>
+      <data key="d10">31.5</data>
+      <data key="d11">0.65</data>
+      <data key="d12">LINESTRING (92.365 25.118, 92.378 25.185)</data>
+      <data key="d13">118</data>
+      <data key="d14">117</data>
+    </edge>
+    <edge source="118" target="119" id="0">
+      <data key="d4">37</data>
+      <data key="d5">100037</data>
+      <data key="d6">NH-6-Sonapur-Tunnel</data>
+      <data key="d7">trunk</data>
+      <data key="d8">1239.0</data>
+      <data key="d9">30</data>
+      <data key="d10">31.5</data>
+      <data key="d11">0.88</data>
+      <data key="d12">LINESTRING (92.365 25.118, 92.372 25.111)</data>
+      <data key="d13">118</data>
+      <data key="d14">119</data>
+    </edge>
+    <edge source="119" target="118" id="0">
+      <data key="d4">38</data>
+      <data key="d5">100038</data>
+      <data key="d6">NH-6-Sonapur-Tunnel</data>
+      <data key="d7">trunk</data>
+      <data key="d8">1239.0</data>
+      <data key="d9">30</data>
+      <data key="d10">31.5</data>
+      <data key="d11">0.88</data>
+      <data key="d12">LINESTRING (92.372 25.111, 92.365 25.118)</data>
+      <data key="d13">119</data>
+      <data key="d14">118</data>
+    </edge>
+    <edge source="119" target="120" id="0">
+      <data key="d4">42</data>
+      <data key="d5">100042</data>
+      <data key="d6">Sonapur-Old-Ridge-Detour</data>
+      <data key="d7">secondary</data>
+      <data key="d8">3350.1</data>
+      <data key="d9">25</data>
+      <data key="d10">31.5</data>
+      <data key="d11">0.42</data>
+      <data key="d12">LINESTRING (92.372 25.111, 92.392 25.129)</data>
+      <data key="d13">119</data>
+      <data key="d14">120</data>
+    </edge>
+    <edge source="119" target="122" id="0">
+      <data key="d4">43</data>
+      <data key="d5">100043</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">5849.7</data>
+      <data key="d9">35</data>
+      <data key="d10">0.7</data>
+      <data key="d11">0.6</data>
+      <data key="d12">LINESTRING (92.372 25.111, 92.385 25.068)</data>
+      <data key="d13">119</data>
+      <data key="d14">122</data>
+    </edge>
+    <edge source="120" target="117" id="0">
+      <data key="d4">40</data>
+      <data key="d5">100040</data>
+      <data key="d6">Sonapur-Old-Ridge-Detour</data>
+      <data key="d7">secondary</data>
+      <data key="d8">7533.5</data>
+      <data key="d9">25</data>
+      <data key="d10">31.5</data>
+      <data key="d11">0.4</data>
+      <data key="d12">LINESTRING (92.392 25.129, 92.378 25.185)</data>
+      <data key="d13">120</data>
+      <data key="d14">117</data>
+    </edge>
+    <edge source="120" target="119" id="0">
+      <data key="d4">41</data>
+      <data key="d5">100041</data>
+      <data key="d6">Sonapur-Old-Ridge-Detour</data>
+      <data key="d7">secondary</data>
+      <data key="d8">3350.1</data>
+      <data key="d9">25</data>
+      <data key="d10">31.5</data>
+      <data key="d11">0.42</data>
+      <data key="d12">LINESTRING (92.392 25.129, 92.372 25.111)</data>
+      <data key="d13">120</data>
+      <data key="d14">119</data>
+    </edge>
+    <edge source="121" target="122" id="0">
+      <data key="d4">46</data>
+      <data key="d5">100046</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">5472.5</data>
+      <data key="d9">35</data>
+      <data key="d10">0.5</data>
+      <data key="d11">0.55</data>
+      <data key="d12">LINESTRING (92.421 25.042, 92.385 25.068)</data>
+      <data key="d13">121</data>
+      <data key="d14">122</data>
+    </edge>
+    <edge source="121" target="123" id="0">
+      <data key="d4">47</data>
+      <data key="d5">100047</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">19575.5</data>
+      <data key="d9">40</data>
+      <data key="d10">0.3</data>
+      <data key="d11">0.35</data>
+      <data key="d12">LINESTRING (92.421 25.042, 92.562 24.965)</data>
+      <data key="d13">121</data>
+      <data key="d14">123</data>
+    </edge>
+    <edge source="122" target="119" id="0">
+      <data key="d4">44</data>
+      <data key="d5">100044</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">5849.7</data>
+      <data key="d9">35</data>
+      <data key="d10">0.7</data>
+      <data key="d11">0.6</data>
+      <data key="d12">LINESTRING (92.385 25.068, 92.372 25.111)</data>
+      <data key="d13">122</data>
+      <data key="d14">119</data>
+    </edge>
+    <edge source="122" target="121" id="0">
+      <data key="d4">45</data>
+      <data key="d5">100045</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">5472.5</data>
+      <data key="d9">35</data>
+      <data key="d10">0.5</data>
+      <data key="d11">0.55</data>
+      <data key="d12">LINESTRING (92.385 25.068, 92.421 25.042)</data>
+      <data key="d13">122</data>
+      <data key="d14">121</data>
+    </edge>
+    <edge source="123" target="121" id="0">
+      <data key="d4">48</data>
+      <data key="d5">100048</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">19575.5</data>
+      <data key="d9">40</data>
+      <data key="d10">0.3</data>
+      <data key="d11">0.35</data>
+      <data key="d12">LINESTRING (92.562 24.965, 92.421 25.042)</data>
+      <data key="d13">123</data>
+      <data key="d14">121</data>
+    </edge>
+    <edge source="123" target="124" id="0">
+      <data key="d4">49</data>
+      <data key="d5">100049</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">8707.4</data>
+      <data key="d9">45</data>
+      <data key="d10">24.0</data>
+      <data key="d11">0.28</data>
+      <data key="d12">LINESTRING (92.562 24.965, 92.585 24.902)</data>
+      <data key="d13">123</data>
+      <data key="d14">124</data>
+    </edge>
+    <edge source="123" target="128" id="0">
+      <data key="d4">57</data>
+      <data key="d5">100057</data>
+      <data key="d6">Borkhola-Link</data>
+      <data key="d7">secondary</data>
+      <data key="d8">20154.9</data>
+      <data key="d9">45</data>
+      <data key="d10">0.0</data>
+      <data key="d11">0.12</data>
+      <data key="d12">LINESTRING (92.562 24.965, 92.721 24.912)</data>
+      <data key="d13">123</data>
+      <data key="d14">128</data>
+    </edge>
+    <edge source="124" target="123" id="0">
+      <data key="d4">50</data>
+      <data key="d5">100050</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">8707.4</data>
+      <data key="d9">45</data>
+      <data key="d10">24.0</data>
+      <data key="d11">0.28</data>
+      <data key="d12">LINESTRING (92.585 24.902, 92.562 24.965)</data>
+      <data key="d13">124</data>
+      <data key="d14">123</data>
+    </edge>
+    <edge source="124" target="125" id="0">
+      <data key="d4">51</data>
+      <data key="d5">100051</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">8786.7</data>
+      <data key="d9">45</data>
+      <data key="d10">24.0</data>
+      <data key="d11">0.25</data>
+      <data key="d12">LINESTRING (92.585 24.902, 92.651 24.872)</data>
+      <data key="d13">124</data>
+      <data key="d14">125</data>
+    </edge>
+    <edge source="125" target="124" id="0">
+      <data key="d4">52</data>
+      <data key="d5">100052</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">8786.7</data>
+      <data key="d9">45</data>
+      <data key="d10">24.0</data>
+      <data key="d11">0.25</data>
+      <data key="d12">LINESTRING (92.651 24.872, 92.585 24.902)</data>
+      <data key="d13">125</data>
+      <data key="d14">124</data>
+    </edge>
+    <edge source="125" target="126" id="0">
+      <data key="d4">53</data>
+      <data key="d5">100053</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">11716.7</data>
+      <data key="d9">45</data>
+      <data key="d10">0.0</data>
+      <data key="d11">0.15</data>
+      <data key="d12">LINESTRING (92.651 24.872, 92.742 24.838)</data>
+      <data key="d13">125</data>
+      <data key="d14">126</data>
+    </edge>
+    <edge source="126" target="125" id="0">
+      <data key="d4">54</data>
+      <data key="d5">100054</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">11716.7</data>
+      <data key="d9">45</data>
+      <data key="d10">0.0</data>
+      <data key="d11">0.15</data>
+      <data key="d12">LINESTRING (92.742 24.838, 92.651 24.872)</data>
+      <data key="d13">126</data>
+      <data key="d14">125</data>
+    </edge>
+    <edge source="126" target="127" id="0">
+      <data key="d4">55</data>
+      <data key="d5">100055</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">6079.1</data>
+      <data key="d9">40</data>
+      <data key="d10">0.0</data>
+      <data key="d11">0.08</data>
+      <data key="d12">LINESTRING (92.742 24.838, 92.791 24.825)</data>
+      <data key="d13">126</data>
+      <data key="d14">127</data>
+    </edge>
+    <edge source="126" target="128" id="0">
+      <data key="d4">60</data>
+      <data key="d5">100060</data>
+      <data key="d6">Borkhola-Silchar</data>
+      <data key="d7">secondary</data>
+      <data key="d8">10026.2</data>
+      <data key="d9">45</data>
+      <data key="d10">0.0</data>
+      <data key="d11">0.1</data>
+      <data key="d12">LINESTRING (92.742 24.838, 92.721 24.912)</data>
+      <data key="d13">126</data>
+      <data key="d14">128</data>
+    </edge>
+    <edge source="127" target="126" id="0">
+      <data key="d4">56</data>
+      <data key="d5">100056</data>
+      <data key="d6">NH-6</data>
+      <data key="d7">trunk</data>
+      <data key="d8">6079.1</data>
+      <data key="d9">40</data>
+      <data key="d10">0.0</data>
+      <data key="d11">0.08</data>
+      <data key="d12">LINESTRING (92.791 24.825, 92.742 24.838)</data>
+      <data key="d13">127</data>
+      <data key="d14">126</data>
+    </edge>
+    <edge source="128" target="123" id="0">
+      <data key="d4">58</data>
+      <data key="d5">100058</data>
+      <data key="d6">Borkhola-Link</data>
+      <data key="d7">secondary</data>
+      <data key="d8">20154.9</data>
+      <data key="d9">45</data>
+      <data key="d10">0.0</data>
+      <data key="d11">0.12</data>
+      <data key="d12">LINESTRING (92.721 24.912, 92.562 24.965)</data>
+      <data key="d13">128</data>
+      <data key="d14">123</data>
+    </edge>
+    <edge source="128" target="126" id="0">
+      <data key="d4">59</data>
+      <data key="d5">100059</data>
+      <data key="d6">Borkhola-Silchar</data>
+      <data key="d7">secondary</data>
+      <data key="d8">10026.2</data>
+      <data key="d9">45</data>
+      <data key="d10">0.0</data>
+      <data key="d11">0.1</data>
+      <data key="d12">LINESTRING (92.721 24.912, 92.742 24.838)</data>
+      <data key="d13">128</data>
+      <data key="d14">126</data>
+    </edge>
+  </graph>
+</graphml>
