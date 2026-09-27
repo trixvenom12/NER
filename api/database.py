@@ -28,10 +28,27 @@ RAW_DB_URL = os.environ.get("DATABASE_URL") or os.environ.get("SUPABASE_DB_URL")
 IS_POSTGRES = RAW_DB_URL.startswith("postgres://") or RAW_DB_URL.startswith("postgresql://")
 
 if IS_POSTGRES:
-    # Normalize postgres:// to postgresql:// for SQLAlchemy
-    DATABASE_URL = RAW_DB_URL.replace("postgres://", "postgresql://", 1)
-    engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+    # Standard clean URI for psycopg2 / psycopg
+    DATABASE_URL = RAW_DB_URL.replace("postgresql+psycopg2://", "postgresql://", 1).replace("postgres://", "postgresql://", 1)
     DB_PATH = DATABASE_URL
+
+    # For SQLAlchemy 2.0, explicitly specify postgresql+psycopg2 to use psycopg2 driver,
+    # or fallback to standard URL if psycopg (v3) is available.
+    if RAW_DB_URL.startswith("postgres://"):
+        SQL_ALCHEMY_URL = RAW_DB_URL.replace("postgres://", "postgresql+psycopg2://", 1)
+    elif RAW_DB_URL.startswith("postgresql://") and not RAW_DB_URL.startswith("postgresql+"):
+        SQL_ALCHEMY_URL = RAW_DB_URL.replace("postgresql://", "postgresql+psycopg2://", 1)
+    else:
+        SQL_ALCHEMY_URL = RAW_DB_URL
+
+    try:
+        engine = create_engine(SQL_ALCHEMY_URL, pool_pre_ping=True)
+    except Exception:
+        try:
+            engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+        except Exception as e:
+            print(f"[WARN] SQLAlchemy engine creation deferred/failed: {e}")
+            engine = None
 else:
     # In serverless environments (Vercel, AWS Lambda), copy DB to /tmp for write access
     if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
@@ -48,7 +65,7 @@ else:
     DATABASE_URL = f"sqlite:///{DB_PATH}"
     engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine) if engine else None
 Base = declarative_base()
 
 
@@ -138,10 +155,16 @@ def get_connection():
     otherwise falls back cleanly to SQLite.
     """
     if IS_POSTGRES:
-        import psycopg2
-        from psycopg2.extras import RealDictCursor
-        raw = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
-        return PostgresConnectionWrapper(raw)
+        try:
+            import psycopg2
+            from psycopg2.extras import RealDictCursor
+            raw = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+            return PostgresConnectionWrapper(raw)
+        except ImportError:
+            import psycopg
+            from psycopg.rows import dict_row
+            raw = psycopg.connect(DATABASE_URL, row_factory=dict_row)
+            return PostgresConnectionWrapper(raw)
 
     conn = sqlite3.connect(DB_PATH, check_same_thread=False)
     conn.row_factory = sqlite3.Row
@@ -166,17 +189,20 @@ def init_db():
         if not os.path.exists(SUPABASE_SCHEMA_PATH):
             print(f"[WARN] Supabase schema file not found at {SUPABASE_SCHEMA_PATH}.")
             return
-        conn = get_connection()
         try:
-            with open(SUPABASE_SCHEMA_PATH, "r") as f:
-                conn.execute(f.read())
-            conn.commit()
-            print("[OK] Supabase PostgreSQL database initialized.")
+            conn = get_connection()
+            try:
+                with open(SUPABASE_SCHEMA_PATH, "r") as f:
+                    conn.execute(f.read())
+                conn.commit()
+                print("[OK] Supabase PostgreSQL database initialized.")
+            except Exception as e:
+                conn.rollback()
+                print(f"[WARN] Supabase init_db notice: {e}")
+            finally:
+                conn.close()
         except Exception as e:
-            conn.rollback()
-            print(f"[WARN] Supabase init_db notice: {e}")
-        finally:
-            conn.close()
+            print(f"[WARN] Supabase connection during init_db failed: {e}")
         return
 
     os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)

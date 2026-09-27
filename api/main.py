@@ -109,7 +109,10 @@ app = FastAPI(
 )
 
 # Eagerly initialize state for serverless environments (Vercel)
-ensure_initialized(app)
+try:
+    ensure_initialized(app)
+except Exception as e:
+    print(f"[WARN] Startup eager initialization notice: {e}")
 
 app.add_middleware(
     CORSMiddleware,
