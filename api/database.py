@@ -42,6 +42,38 @@ except Exception:
 RAW_DB_URL = os.environ.get("DATABASE_URL") or os.environ.get("SUPABASE_DB_URL") or ""
 IS_POSTGRES = RAW_DB_URL.startswith("postgres://") or RAW_DB_URL.startswith("postgresql://")
 
+def _setup_sqlite_db() -> str:
+    """Finds the best SQLite database file, copying to /tmp in serverless if writable."""
+    candidates = [
+        _BUNDLED_DB,
+        os.path.join(_PROJECT_ROOT, "ner_logistics.db"),
+        os.path.join(_PROJECT_ROOT, "data", "ner_logistics.db"),
+    ]
+    source_file = next((p for p in candidates if os.path.exists(p)), None)
+
+    # In serverless environments (Linux with /tmp), copy DB to /tmp for write access
+    if os.path.exists("/tmp") and os.path.isdir("/tmp") and os.name != "nt":
+        tmp_target = "/tmp/ner_logistics.db"
+        need_copy = not os.path.exists(tmp_target)
+        if not need_copy and source_file:
+            try:
+                if os.path.getsize(tmp_target) < os.path.getsize(source_file):
+                    need_copy = True
+            except Exception:
+                need_copy = True
+
+        if need_copy and source_file:
+            try:
+                shutil.copy2(source_file, tmp_target)
+            except Exception as e:
+                print(f"[WARN] Failed copying SQLite DB to /tmp: {e}")
+
+        if os.path.exists(tmp_target):
+            return tmp_target
+
+    return source_file or _BUNDLED_DB
+
+
 if IS_POSTGRES:
     # Standard clean URI for psycopg2 / psycopg
     DATABASE_URL = RAW_DB_URL.replace("postgresql+psycopg2://", "postgresql://", 1).replace("postgres://", "postgresql://", 1)
@@ -65,29 +97,12 @@ if IS_POSTGRES:
             print(f"[WARN] SQLAlchemy engine creation deferred/failed: {e}")
             engine = None
 else:
-    # In serverless environments (Vercel, AWS Lambda), copy DB to /tmp for write access
-    if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
-        TMP_DB = os.path.join("/tmp", "ner_logistics.db")
-        should_copy = not os.path.exists(TMP_DB)
-        if not should_copy and os.path.exists(_ORIGINAL_DB):
-            try:
-                if os.path.getsize(TMP_DB) < os.path.getsize(_ORIGINAL_DB):
-                    should_copy = True
-            except Exception:
-                should_copy = True
-
-        if should_copy and os.path.exists(_ORIGINAL_DB):
-            try:
-                shutil.copy2(_ORIGINAL_DB, TMP_DB)
-            except Exception as e:
-                print(f"[WARN] Failed to copy SQLite DB to /tmp: {e}")
-
-        DB_PATH = TMP_DB if os.path.exists(TMP_DB) else _ORIGINAL_DB
-    else:
-        DB_PATH = _ORIGINAL_DB
-
+    DB_PATH = _setup_sqlite_db()
     DATABASE_URL = f"sqlite:///{DB_PATH}"
-    engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+    try:
+        engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+    except Exception:
+        engine = None
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine) if engine else None
 Base = declarative_base()
@@ -196,34 +211,38 @@ def get_connection():
             except Exception as e2:
                 print(f"[WARN] Supabase Postgres connection failed ({e1} | {e2}); using SQLite fallback.")
 
-    sqlite_path = DB_PATH if os.path.exists(DB_PATH) else (_BUNDLED_DB if os.path.exists(_BUNDLED_DB) else _ORIGINAL_DB)
-    if not os.path.exists(sqlite_path) or sqlite_path.startswith("postgres"):
-        for candidate in (
-            _BUNDLED_DB,
-            os.path.join(_PROJECT_ROOT, "ner_logistics.db"),
-            os.path.join(_PROJECT_ROOT, "data", "ner_logistics.db"),
-        ):
-            if os.path.exists(candidate):
-                sqlite_path = candidate
-                break
+    sqlite_path = _setup_sqlite_db()
+    conn = None
 
-    conn = sqlite3.connect(sqlite_path, check_same_thread=False)
-    conn.row_factory = sqlite3.Row
     try:
-        conn.execute("PRAGMA journal_mode=WAL;")
-    except Exception:
-        pass
-    try:
-        conn.execute("PRAGMA foreign_keys=ON;")
-    except Exception:
-        pass
+        conn = sqlite3.connect(sqlite_path, check_same_thread=False)
+        conn.row_factory = sqlite3.Row
+        try:
+            conn.execute("PRAGMA journal_mode=WAL;")
+        except Exception:
+            pass
+        try:
+            conn.execute("PRAGMA foreign_keys=ON;")
+        except Exception:
+            pass
+    except sqlite3.OperationalError:
+        # Fallback to read-only URI if running directly on a read-only filesystem (e.g. /var/task)
+        clean_path = sqlite_path.replace("\\", "/")
+        if not clean_path.startswith("/"):
+            clean_path = "/" + clean_path
+        conn = sqlite3.connect(f"file:{clean_path}?mode=ro", uri=True, check_same_thread=False)
+        conn.row_factory = sqlite3.Row
 
     # Ensure tables exist (self-healing for Vercel /tmp or cold containers)
     try:
         conn.execute("SELECT 1 FROM facility LIMIT 1;")
     except sqlite3.OperationalError:
         print("[WARN] Table 'facility' missing in connected DB. Refreshing from bundled DB...")
-        conn.close()
+        try:
+            conn.close()
+        except Exception:
+            pass
+
         if os.path.exists(_BUNDLED_DB) and sqlite_path != _BUNDLED_DB:
             try:
                 shutil.copy2(_BUNDLED_DB, sqlite_path)
@@ -238,8 +257,15 @@ def get_connection():
             except Exception as e:
                 print(f"[WARN] Failed to run schema on DB: {e}")
 
-        conn = sqlite3.connect(sqlite_path, check_same_thread=False)
-        conn.row_factory = sqlite3.Row
+        try:
+            conn = sqlite3.connect(sqlite_path, check_same_thread=False)
+            conn.row_factory = sqlite3.Row
+        except sqlite3.OperationalError:
+            clean_path = sqlite_path.replace("\\", "/")
+            if not clean_path.startswith("/"):
+                clean_path = "/" + clean_path
+            conn = sqlite3.connect(f"file:{clean_path}?mode=ro", uri=True, check_same_thread=False)
+            conn.row_factory = sqlite3.Row
 
     return conn
 
