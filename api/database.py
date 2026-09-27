@@ -158,15 +158,27 @@ def get_connection():
         try:
             import psycopg2
             from psycopg2.extras import RealDictCursor
-            raw = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+            raw = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor, connect_timeout=5)
             return PostgresConnectionWrapper(raw)
-        except ImportError:
-            import psycopg
-            from psycopg.rows import dict_row
-            raw = psycopg.connect(DATABASE_URL, row_factory=dict_row)
-            return PostgresConnectionWrapper(raw)
+        except Exception as e1:
+            try:
+                import psycopg
+                from psycopg.rows import dict_row
+                raw = psycopg.connect(DATABASE_URL, row_factory=dict_row, connect_timeout=5)
+                return PostgresConnectionWrapper(raw)
+            except Exception as e2:
+                print(f"[WARN] Supabase Postgres connection failed ({e1} | {e2}); using SQLite fallback.")
 
-    conn = sqlite3.connect(DB_PATH, check_same_thread=False)
+    sqlite_path = DB_PATH
+    if not os.path.exists(sqlite_path):
+        root_db = os.path.join(_PROJECT_ROOT, "ner_logistics.db")
+        data_db = os.path.join(_PROJECT_ROOT, "data", "ner_logistics.db")
+        if os.path.exists(root_db):
+            sqlite_path = root_db
+        elif os.path.exists(data_db):
+            sqlite_path = data_db
+
+    conn = sqlite3.connect(sqlite_path, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     try:
         conn.execute("PRAGMA journal_mode=WAL;")
