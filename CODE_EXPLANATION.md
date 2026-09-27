@@ -19,7 +19,181 @@ Rather than relying on generic shortest-distance algorithms or opaque black-box 
 
 ---
 
-## 2. File & Directory Structure
+## 2. NER — Full Tech Stack & Architectural Specification
+
+### 1. Frontend
+- **React.js** — Web application and dashboards
+- **MapLibre GL JS** — Interactive maps, routes and hazard layers
+- **Tailwind CSS** — UI styling and responsive design
+
+### 2. Backend
+- **Python** — Core backend, data processing and ML
+- **FastAPI** — REST APIs and communication between frontend, ML, GIS and database
+
+### 3. AI / Machine Learning
+- **Scikit-learn** — Machine-learning pipeline and risk analysis
+- **XGBoost** — Risk-model adjustment/prediction
+- **Transparent Risk Index** — Combines rainfall, slope, susceptibility, historical incidents and driver reports
+
+### 4. GIS & Routing
+- **OpenStreetMap (OSM)** — Road-network data
+- **OSMnx** — Extracts and builds the road graph
+- **NetworkX** — Graph-based route optimization
+- **PostGIS** — Spatial/geographic database operations
+- **PostgreSQL** — Main database
+- **pysheds** — Terrain and hydrological analysis
+
+### 5. Terrain & Environmental Data
+- **SRTM DEM** — Elevation and slope
+- **Sentinel-1 SAR** — Satellite/environmental monitoring
+- **GSI / Bhuvan** — Landslide susceptibility data
+- **IMD / Open-Meteo** — Rainfall and weather data
+- **CWC** — Flood/water-level information
+- **Historical incident data** — Previous landslides, floods and blockades
+- **Driver reports** — Real-time ground-level road information
+
+### 6. Routing Engine
+
+The system supports:
+
+- **Fastest Route** — Minimum travel time
+- **Balanced Route** — Time + risk
+- **Safest Route** — Minimum risk
+- **Blocked-road exclusion** — Confirmed blocked/high-risk segments are avoided
+
+```text
+Road Network
+     ↓
+Risk Score per Segment
+     ↓
+Risk-Weighted Graph
+     ↓
+NetworkX Routing
+     ↓
+Fastest / Balanced / Safest
+```
+
+### 7. Offline-First / PWA
+
+- **Progressive Web App (PWA)** — Application that can operate with poor connectivity
+- **Service Workers** — Cache application resources
+- **IndexedDB** — Store corridor maps, routes, risk data and pending reports locally
+- **Background Sync API** — Synchronize reports/SOS when connectivity returns
+- **Offline Outbox** — Queues driver reports and SOS requests
+
+```text
+Internet Available
+       ↓
+Download Corridor Data
+       ↓
+IndexedDB
+       ↓
+Network Lost
+       ↓
+Continue Using Cached Data
+       ↓
+Network Returns
+       ↓
+Background Sync
+       ↓
+FastAPI
+       ↓
+Database
+```
+
+### 8. APIs / Services
+
+- `/route` — Route calculation
+- `/risk` — Road-risk information
+- `/facilities` — Truck bays, food, fuel and medical facilities
+- `/reports` — Driver road-condition reports
+- `/sos` — Emergency SOS
+- `/analytics` — Historical data and heatmaps
+- `/sync` — Offline-data synchronization
+
+### 9. Database
+
+**PostgreSQL + PostGIS**
+
+Stores:
+
+- Road network
+- Geographic coordinates
+- Hazard zones
+- Risk scores
+- Historical incidents
+- Driver reports
+- Truck/facility information
+- Offline synchronization data
+
+### 10. Deployment
+
+- **Docker**
+- **Docker Compose**
+- **Cloud VM deployment**
+
+Container structure:
+
+```text
+Docker Compose
+│
+├── React + MapLibre
+├── FastAPI
+├── ML/Risk Engine
+├── PostgreSQL
+└── PostGIS
+```
+
+### Complete Architecture
+
+```text
+IMD / Open-Meteo ─┐
+SRTM ─────────────┤
+Sentinel-1 ───────┤
+CWC ──────────────┤
+GSI/Bhuvan ───────┤
+OSM ──────────────┤
+Historical Data ──┤
+Driver Reports ───┘
+        ↓
+PostgreSQL + PostGIS
+        ↓
+┌─────────────────────────┐
+│ GIS / Terrain Processing│
+│ OSMnx + pysheds         │
+└────────────┬────────────┘
+             ↓
+┌─────────────────────────┐
+│ Risk Engine             │
+│ Risk Index + XGBoost    │
+└────────────┬────────────┘
+             ↓
+┌─────────────────────────┐
+│ Routing Engine          │
+│ NetworkX                │
+│ Fastest / Balanced /    │
+│ Safest                  │
+└────────────┬────────────┘
+             ↓
+          FastAPI
+             ↓
+┌─────────────────────────┐
+│ React + MapLibre GL JS  │
+└────────────┬────────────┘
+             ↓
+┌─────────────────────────┐
+│ Offline PWA             │
+│ Service Worker          │
+│ IndexedDB               │
+│ Background Sync         │
+└─────────────────────────┘
+```
+
+The prototype manual specifically describes this architecture around **OSM/OSMnx/NetworkX routing, PostGIS, the transparent risk index + XGBoost adjustment, FastAPI, React/MapLibre, and the offline PWA stack**.
+
+---
+
+## 3. File & Directory Structure
 
 ```
 c:/Google Antigravity Files/SIH 2026 Project/
