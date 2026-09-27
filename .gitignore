@@ -4,13 +4,11 @@ __pycache__/
 *.pyc
 *.pyo
 *.egg-info/
-dist/
 build/
 *.egg
 
 # Node
 node_modules/
-web/dist/
 
 # IDE
 .vscode/

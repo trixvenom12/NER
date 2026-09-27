@@ -10,7 +10,7 @@ from contextlib import asynccontextmanager
 
 import networkx as nx
 import joblib
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -122,6 +122,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.middleware("http")
+async def vercel_path_rewrite_middleware(request: Request, call_next):
+    """Restores the original API path when Vercel serverless rewrites request to /api/index.py."""
+    matched_path = (
+        request.headers.get("x-matched-path")
+        or request.headers.get("x-forwarded-uri")
+        or request.headers.get("x-original-uri")
+    )
+    if matched_path and request.scope["path"] in ("/api/index.py", "/api/", "/api"):
+        path_only = matched_path.split("?")[0]
+        request.scope["path"] = path_only
+    return await call_next(request)
+
 # ─── Register ALL routers ───────────────────────────────────────────
 from api.routers.routes import router as routes_router
 from api.routers.risk import router as risk_router
@@ -160,6 +174,8 @@ if os.path.isdir(_WEB_DIST):
     @app.get("/{full_path:path}")
     async def serve_spa(full_path: str):
         """Serve Vite SPA — all non-API routes fall through to index.html."""
+        if full_path.startswith("api/") or full_path == "api":
+            return {"detail": "API endpoint not found", "status": 404}
         file_path = os.path.join(_WEB_DIST, full_path)
         if os.path.isfile(file_path):
             return FileResponse(file_path)
