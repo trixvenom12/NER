@@ -5,14 +5,27 @@ All routers and services depend on get_connection() and init_db().
 """
 
 import os
+import shutil
 import sqlite3
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 # Resolve DB and schema paths relative to project root
 _PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-DB_PATH = os.path.join(_PROJECT_ROOT, "data", "ner_logistics.db")
+_ORIGINAL_DB = os.path.join(_PROJECT_ROOT, "data", "ner_logistics.db")
 SCHEMA_PATH = os.path.join(_PROJECT_ROOT, "data", "schema.sql")
+
+# In serverless environments (Vercel, AWS Lambda), copy DB to /tmp for write access
+if os.environ.get("VERCEL") or os.environ.get("AWS_LAMBDA_FUNCTION_NAME"):
+    TMP_DB = os.path.join("/tmp", "ner_logistics.db")
+    if os.path.exists(_ORIGINAL_DB) and not os.path.exists(TMP_DB):
+        try:
+            shutil.copy2(_ORIGINAL_DB, TMP_DB)
+        except Exception as e:
+            print(f"[WARN] Failed to copy SQLite DB to /tmp: {e}")
+    DB_PATH = TMP_DB if os.path.exists(TMP_DB) else _ORIGINAL_DB
+else:
+    DB_PATH = _ORIGINAL_DB
 
 DATABASE_URL = f"sqlite:///{DB_PATH}"
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
@@ -27,8 +40,14 @@ def get_connection() -> sqlite3.Connection:
     """
     conn = sqlite3.connect(DB_PATH, check_same_thread=False)
     conn.row_factory = sqlite3.Row
-    conn.execute("PRAGMA journal_mode=WAL;")
-    conn.execute("PRAGMA foreign_keys=ON;")
+    try:
+        conn.execute("PRAGMA journal_mode=WAL;")
+    except Exception:
+        pass
+    try:
+        conn.execute("PRAGMA foreign_keys=ON;")
+    except Exception:
+        pass
     return conn
 
 

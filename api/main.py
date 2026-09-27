@@ -53,46 +53,52 @@ def _load_risk_cache() -> dict:
     return cache
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
+def ensure_initialized(app: FastAPI):
     """
-    Startup: init DB, load graph, load ML model, populate risk cache.
-    Shutdown: no cleanup needed.
+    Idempotent initializer for database, road graph, ML model, and risk cache.
+    Works for both traditional persistent servers and serverless cold starts.
     """
     # 1. Initialize database tables
     init_db()
 
-    # 2. Load road graph
-    graph_path = os.path.join(_PROJECT_ROOT, "data", "graph", "ner_drive.graphml")
-    if os.path.exists(graph_path):
-        try:
-            app.state.graph = nx.read_graphml(graph_path)
-            print(f"[OK] Road graph loaded: {app.state.graph.number_of_nodes()} nodes, "
-                  f"{app.state.graph.number_of_edges()} edges")
-        except Exception as e:
-            print(f"[WARN] Failed to load graph: {e}")
+    # 2. Load road graph if not already loaded
+    if not hasattr(app.state, "graph") or app.state.graph is None:
+        graph_path = os.path.join(_PROJECT_ROOT, "data", "graph", "ner_drive.graphml")
+        if os.path.exists(graph_path):
+            try:
+                app.state.graph = nx.read_graphml(graph_path)
+                print(f"[OK] Road graph loaded: {app.state.graph.number_of_nodes()} nodes, "
+                      f"{app.state.graph.number_of_edges()} edges")
+            except Exception as e:
+                print(f"[WARN] Failed to load graph: {e}")
+                app.state.graph = None
+        else:
+            print(f"[WARN] Graph file not found at {graph_path}. Run: python build/build_graph.py")
             app.state.graph = None
-    else:
-        print(f"[WARN] Graph file not found at {graph_path}. Run: python build/build_graph.py")
-        app.state.graph = None
 
-    # 3. Load ML risk model
-    model_path = os.path.join(_PROJECT_ROOT, "models", "risk_model.joblib")
-    if os.path.exists(model_path):
-        try:
-            app.state.model = joblib.load(model_path)
-            print(f"[OK] ML risk model loaded from {model_path}")
-        except Exception as e:
-            print(f"[WARN] Failed to load ML model: {e}")
+    # 3. Load ML risk model if not already loaded
+    if not hasattr(app.state, "model") or app.state.model is None:
+        model_path = os.path.join(_PROJECT_ROOT, "models", "risk_model.joblib")
+        if os.path.exists(model_path):
+            try:
+                app.state.model = joblib.load(model_path)
+                print(f"[OK] ML risk model loaded from {model_path}")
+            except Exception as e:
+                print(f"[WARN] Failed to load ML model: {e}")
+                app.state.model = None
+        else:
             app.state.model = None
-    else:
-        app.state.model = None
 
     # 4. Populate risk cache from segment_risk table
-    app.state.risk_cache = _load_risk_cache()
+    if not hasattr(app.state, "risk_cache") or not app.state.risk_cache:
+        app.state.risk_cache = _load_risk_cache()
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Startup & shutdown lifespan event handler."""
+    ensure_initialized(app)
     yield
-    # Shutdown — nothing to clean up
 
 
 app = FastAPI(
@@ -101,6 +107,9 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan,
 )
+
+# Eagerly initialize state for serverless environments (Vercel)
+ensure_initialized(app)
 
 app.add_middleware(
     CORSMiddleware,
