@@ -8,3 +8,4 @@ scikit-learn
 joblib
 pydantic
 sqlalchemy
+psycopg2-binary
