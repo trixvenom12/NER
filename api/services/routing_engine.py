@@ -12,6 +12,35 @@ import networkx as nx
 from typing import Dict, List, Any, Optional
 from api.services.advisories import generate_advisories
 
+
+def _extract_geometry_coords(G: nx.Graph, u: Any, v: Any, edge_data: Dict[str, Any]) -> List[List[float]]:
+    """Return a 2D coordinate list for a route segment.
+
+    Some GraphML loads preserve node x/y metadata but may drop the WKT geometry
+    for individual edges, so we fall back to node lat/lon coordinates.
+    """
+    geom_wkt = edge_data.get("geometry")
+    if geom_wkt:
+        try:
+            from shapely.wkt import loads
+            line = loads(geom_wkt)
+            return [[float(lon), float(lat)] for lon, lat in line.coords]
+        except Exception:
+            pass
+
+    u_node = G.nodes.get(u, {})
+    v_node = G.nodes.get(v, {})
+
+    lon1 = float(u_node.get("lon", u_node.get("x", 0.0)))
+    lat1 = float(u_node.get("lat", u_node.get("y", 0.0)))
+    lon2 = float(v_node.get("lon", v_node.get("x", 0.0)))
+    lat2 = float(v_node.get("lat", v_node.get("y", 0.0)))
+
+    if lon1 == 0.0 and lat1 == 0.0 and lon2 == 0.0 and lat2 == 0.0:
+        return []
+
+    return [[lon1, lat1], [lon2, lat2]]
+
 PROFILES = {
     "fastest": 0.0,
     "balanced": 1.2,
@@ -117,17 +146,12 @@ def route_single(
         current_km += length_m / 1000.0
 
         # Geometry coordinates
-        geom_wkt = d.get("geometry")
-        if geom_wkt:
-            try:
-                line = wkt.loads(geom_wkt)
-                coords = list(line.coords)
-                if not route_coords:
-                    route_coords.extend(coords)
-                else:
-                    route_coords.extend(coords[1:])
-            except Exception:
-                pass
+        coords = _extract_geometry_coords(G, u, v, d)
+        if coords:
+            if not route_coords:
+                route_coords.extend(coords)
+            else:
+                route_coords.extend(coords[1:])
 
         route_segments.append({
             "id": seg_id,

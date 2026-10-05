@@ -27,11 +27,13 @@ export default function RouteScreen() {
   const loadRoutes = useCallback(async () => {
     setLoading(true);
     setError(null);
+    setRouteAlternatives(null);
+    setRouteGeoJSON(null);
+
     try {
       const data = await fetchRouteAlternatives(src, dst);
       if (data) {
         setRouteAlternatives(data);
-        // Set active route geometry on map
         const active = data.routes?.[activeProfile];
         if (active?.geometry) {
           setRouteGeoJSON(active.geometry);
@@ -45,7 +47,7 @@ export default function RouteScreen() {
   }, [src, dst, activeProfile, setRouteAlternatives, setRouteGeoJSON]);
 
   // Load on mount and when origin/destination changes
-  useEffect(() => { loadRoutes(); }, [src, dst]);
+  useEffect(() => { loadRoutes(); }, [src, dst, loadRoutes]);
 
   // When profile changes, update the map geometry
   useEffect(() => {

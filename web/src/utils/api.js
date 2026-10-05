@@ -26,8 +26,12 @@ async function apiFetch(path, options = {}) {
 }
 
 // ─── Route Planning ────────────────────────────────────────────────
+export function buildRouteAlternativesUrl(src = 101, dst = 127) {
+  return `/route/alternatives?src=${src}&dst=${dst}`;
+}
+
 export function fetchRouteAlternatives(src = 101, dst = 127) {
-  return apiFetch(`/route/alternatives?src=${src}&dst=${dst}`);
+  return apiFetch(buildRouteAlternativesUrl(src, dst));
 }
 
 export function fetchRoute(src, dst, profile = 'balanced') {
